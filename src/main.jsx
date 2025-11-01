@@ -6,7 +6,8 @@ import "./index.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <HashRouter basename="/Smart-Dental/">
+    <HashRouter basename="/Smart-Dental/"> 
+    {/* change to / if local and /Smart-Dental/ if hosted */}
       <App />
     </HashRouter>
   </StrictMode>
