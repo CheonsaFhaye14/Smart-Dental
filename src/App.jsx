@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
@@ -25,58 +25,20 @@ function ProtectedAdminRoute({ children }) {
 function App() {
   return (
     <AdminAuthProvider>
-      <Router>
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
-          <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
-          <Route path="/download" element={<PublicLayout><Download /></PublicLayout>} />
-          <Route path="/login" element={<PublicLayout><Login /></PublicLayout>} />
-          <Route path="/reset-password" element={<PublicLayout><ResetPassword /></PublicLayout>} />
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
+        <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
+        <Route path="/download" element={<PublicLayout><Download /></PublicLayout>} />
+        <Route path="/login" element={<PublicLayout><Login /></PublicLayout>} />
+        <Route path="/reset-password" element={<PublicLayout><ResetPassword /></PublicLayout>} />
 
-          {/* Admin Routes */}
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedAdminRoute>
-                <AdminLayout>
-                  <Dashboard />
-                </AdminLayout>
-              </ProtectedAdminRoute>
-            }
-          />
-          <Route
-            path="/users"
-            element={
-              <ProtectedAdminRoute>
-                <AdminLayout>
-                  <Users />
-                </AdminLayout>
-              </ProtectedAdminRoute>
-            }
-          />
-          <Route
-            path="/services"
-            element={
-              <ProtectedAdminRoute>
-                <AdminLayout>
-                  <Services />
-                </AdminLayout>
-              </ProtectedAdminRoute>
-            }
-          />
-          <Route
-            path="/appointments"
-            element={
-              <ProtectedAdminRoute>
-                <AdminLayout>
-                  <Appointments />
-                </AdminLayout>
-              </ProtectedAdminRoute>
-            }
-          />
-        </Routes>
-      </Router>
+        {/* Admin Routes */}
+        <Route path="/dashboard" element={<ProtectedAdminRoute><AdminLayout><Dashboard /></AdminLayout></ProtectedAdminRoute>} />
+        <Route path="/users" element={<ProtectedAdminRoute><AdminLayout><Users /></AdminLayout></ProtectedAdminRoute>} />
+        <Route path="/services" element={<ProtectedAdminRoute><AdminLayout><Services /></AdminLayout></ProtectedAdminRoute>} />
+        <Route path="/appointments" element={<ProtectedAdminRoute><AdminLayout><Appointments /></AdminLayout></ProtectedAdminRoute>} />
+      </Routes>
     </AdminAuthProvider>
   );
 }
