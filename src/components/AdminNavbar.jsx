@@ -11,7 +11,7 @@ export default function AdminNavbar() {
     logout();
     localStorage.removeItem("adminId");
     localStorage.removeItem("adminUsername");
-    window.location.href = "/login";
+    window.location.href = "#/login";
   };
 
   return (

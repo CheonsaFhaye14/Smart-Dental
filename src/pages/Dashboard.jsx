@@ -8,8 +8,8 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!token) {
-      // Navigate to login respecting basename
-      navigate("/login", { replace: true }); // ✅ keep it simple
+      // Use a relative path with HashRouter
+      navigate("/login", { replace: true }); // ← note the "#/"
     }
   }, [navigate, token]);
 
