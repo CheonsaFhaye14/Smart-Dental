@@ -1,0 +1,48 @@
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Base button style */
+.action-buttons button {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 12px; /* softer, cuter edges */
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  color: #fff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* subtle floating effect */
+}
+
+/* Light pastel colors for a cute look */
+.btn-edit {
+  background-color: #a3d2ff; /* pastel blue */
+  color: #003566;
+}
+
+.btn-edit:hover {
+  background-color: #7bbfff;
+  transform: translateY(-2px);
+}
+
+.btn-delete {
+  background-color: #ffb3b3; /* pastel red/pink */
+  color: #660000;
+}
+
+.btn-delete:hover {
+  background-color: #ff8a8a;
+  transform: translateY(-2px);
+}
+
+.btn-undo {
+  background-color: #b3f0c1; /* pastel green */
+  color: #006633;
+}
+
+.btn-undo:hover {
+  background-color: #8ce5a1;
+  transform: translateY(-2px);
+}

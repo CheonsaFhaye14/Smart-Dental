@@ -1,0 +1,19 @@
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* ensures padding doesn't affect width/height */
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: "Varela Round", sans-serif; /* main cute font */
+}
+
+/* Optional class if you want to use it on specific elements */
+.varela-round-regular {
+  font-family: "Varela Round", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}

@@ -1,0 +1,161 @@
+import React, { useMemo, useState } from "react";
+import "./Table.css";
+import FloatingInput from "../utils/InputForm";
+import ShowInfoModal from "./ShowInfoModal"; 
+import ActionButtons from "../components/ActionButtons";
+
+const Table = ({ columns = [], data = [], filters = {}, setFilters }) => {
+  const [search, setSearch] = useState("");
+  const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showAll, setShowAll] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const rowsPerPage = 5;
+
+  const handleReset = () => {
+    setSearch("");
+    setSortConfig({ key: "", direction: "" });
+    setCurrentPage(1);
+    setShowAll(false);
+    setFilters?.({});
+  };
+
+  const filteredData = useMemo(() => {
+    return data.filter((row) => {
+      const searchMatch = Object.values(row)
+        .join(" ")
+        .toLowerCase()
+        .includes(search.toLowerCase());
+
+      const filtersMatch = Object.keys(filters).every((key) => {
+        const filterValue = filters[key];
+        if (!filterValue) return true;
+        const cellValue = row[key];
+        const col = columns.find((c) => c.accessor === key);
+        return col?.filterFn
+          ? col.filterFn(cellValue, filterValue, row)
+          : String(cellValue)?.toLowerCase().includes(String(filterValue).toLowerCase());
+      });
+
+      return searchMatch && filtersMatch;
+    });
+  }, [data, search, filters, columns]);
+
+  const sortedData = useMemo(() => {
+    if (!sortConfig.key) return filteredData;
+    return [...filteredData].sort((a, b) => {
+      const aVal = a[sortConfig.key], bVal = b[sortConfig.key];
+      if (aVal < bVal) return sortConfig.direction === "asc" ? -1 : 1;
+      if (aVal > bVal) return sortConfig.direction === "asc" ? 1 : -1;
+      return 0;
+    });
+  }, [filteredData, sortConfig]);
+
+  const totalPages = Math.ceil(sortedData.length / rowsPerPage);
+  const paginatedData = showAll
+    ? sortedData
+    : sortedData.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+
+  const isResetDisabled =
+    !search && !sortConfig.key && !showAll && (!filters || Object.values(filters).every(v => !v));
+
+  const handleSort = (key) => {
+    setCurrentPage(1);
+    setSortConfig((prev) => ({
+      key,
+      direction: prev.key === key && prev.direction === "asc" ? "desc" : "asc",
+    }));
+  };
+
+  return (
+    <div className="table-wrapper">
+      <div style={{ display: "flex", gap: "10px" }}>
+        <FloatingInput
+          placeholder="Search..."
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setCurrentPage(1);
+          }}
+        />
+
+        <button className="Showall-btn" onClick={() => setShowAll(prev => !prev)}>
+          {showAll ? "Paginate" : "Show All"}
+        </button>
+
+        <button onClick={handleReset} disabled={isResetDisabled} className="reset-btn">
+          Reset
+        </button>
+      </div>
+
+      <table className="custom-table">
+        <thead>
+          <tr>
+            {columns.map((col) => (
+              <th
+                key={col.accessor}
+                onClick={() => handleSort(col.accessor)}
+                className="sortable"
+              >
+                {col.header}
+                {sortConfig.key === col.accessor && (sortConfig.direction === "asc" ? " ▲" : " ▼")}
+              </th>
+            ))}
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {paginatedData.length > 0 ? (
+            paginatedData.map((row, i) => (
+              <tr key={i}>
+                {columns.map((col) => (
+                  <td key={col.accessor} onClick={() => setSelectedRow(row)} style={{ cursor: "pointer" }}>
+                    {col.render ? col.render(row) : row[col.accessor]}
+                  </td>
+                ))}
+
+                <td onClick={(e) => e.stopPropagation()}>
+                  {/* Show buttons dynamically based on row props */}
+                  <ActionButtons
+                    onEdit={row.onEdit}
+                    onDelete={row.onDelete}
+                    onUndo={row.onUndo}
+                    editLabel={row.editLabel}
+                    deleteLabel={row.deleteLabel}
+                    undoLabel={row.undoLabel}
+                  />
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={columns.length + 1} className="no-data">No data available</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+
+      {!showAll && (
+        <div className="pagination">
+          <button disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)}>
+            Prev
+          </button>
+          <span>Page {currentPage} of {totalPages || 1}</span>
+          <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)}>
+            Next
+          </button>
+        </div>
+      )}
+
+      {selectedRow && (
+        <ShowInfoModal 
+          row={selectedRow} 
+          onClose={() => setSelectedRow(null)} 
+        />
+      )}
+    </div>
+  );
+};
+
+export default Table;
