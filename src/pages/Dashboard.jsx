@@ -7,7 +7,10 @@ export default function Dashboard() {
   const { token } = useAdminAuth();
 
   useEffect(() => {
-    if (!token) navigate("/login"); // ⛔ Kick out if not authenticated
+    if (!token) {
+      // Navigate to login respecting basename
+      navigate("/login", { replace: true }); // ✅ keep it simple
+    }
   }, [navigate, token]);
 
   return (

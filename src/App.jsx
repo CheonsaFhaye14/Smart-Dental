@@ -16,7 +16,7 @@ import AdminLayout from './layouts/AdminLayout';
 import { AdminAuthProvider } from './context/AdminAuthProvider';
 import { useAdminAuth } from './hooks/useAdminAuth';
 
-// Component to protect admin routes
+// Protect admin routes
 function ProtectedAdminRoute({ children }) {
   const { token } = useAdminAuth();
   return token ? children : <PublicLayout><Login /></PublicLayout>;
@@ -38,6 +38,9 @@ function App() {
         <Route path="/users" element={<ProtectedAdminRoute><AdminLayout><Users /></AdminLayout></ProtectedAdminRoute>} />
         <Route path="/services" element={<ProtectedAdminRoute><AdminLayout><Services /></AdminLayout></ProtectedAdminRoute>} />
         <Route path="/appointments" element={<ProtectedAdminRoute><AdminLayout><Appointments /></AdminLayout></ProtectedAdminRoute>} />
+
+        {/* Fallback for unmatched routes */}
+        <Route path="*" element={<PublicLayout><HomePage /></PublicLayout>} />
       </Routes>
     </AdminAuthProvider>
   );
