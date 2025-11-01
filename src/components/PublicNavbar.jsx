@@ -13,7 +13,7 @@ export default function PublicNavbar() {
   return (
     <nav className={`public-navbar ${menuOpen ? "active" : ""}`}>
       <div className="navbar-logo">
-        <img src="/image.png" alt="Dental Clinic Logo" />
+        <img src="../assets/image.png" alt="Dental Clinic Logo" />
         <span>Smart Dental Clinic</span>
       </div>
 

@@ -17,7 +17,7 @@ export default function AdminNavbar() {
   return (
     <nav className="admin-navbar">
       <div className="navbar-logo">
-        <img src="/image.png" alt="Dental Clinic Logo" height="40" />
+        <img src="../assets/image.png" alt="Dental Clinic Logo" height="40" />
         <span>Smart Dental Admin Portal</span>
       </div>
 
