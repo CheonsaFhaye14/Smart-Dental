@@ -41,13 +41,38 @@ const Table = ({ columns = [], data = [], filters = {}, setFilters }) => {
     });
   }, [data, search, filters, columns]);
 
-  const sortedData = useMemo(() => {
+   const sortedData = useMemo(() => {
     if (!sortConfig.key) return filteredData;
+
+    const isDate = (val) => val && !isNaN(Date.parse(val));
+    const isNumber = (val) => val !== null && val !== "" && !isNaN(Number(val));
+
     return [...filteredData].sort((a, b) => {
-      const aVal = a[sortConfig.key], bVal = b[sortConfig.key];
-      if (aVal < bVal) return sortConfig.direction === "asc" ? -1 : 1;
-      if (aVal > bVal) return sortConfig.direction === "asc" ? 1 : -1;
-      return 0;
+      let aVal = a[sortConfig.key];
+      let bVal = b[sortConfig.key];
+
+      // Normalize values (remove spaces, lower cases)
+      if (typeof aVal === "string") aVal = aVal.trim();
+      if (typeof bVal === "string") bVal = bVal.trim();
+
+      // ✅ Number Sorting
+      if (isNumber(aVal) && isNumber(bVal)) {
+        return sortConfig.direction === "asc"
+          ? Number(aVal) - Number(bVal)
+          : Number(bVal) - Number(aVal);
+      }
+
+      // ✅ Date Sorting
+      if (isDate(aVal) && isDate(bVal)) {
+        return sortConfig.direction === "asc"
+          ? new Date(aVal) - new Date(bVal)
+          : new Date(bVal) - new Date(aVal);
+      }
+
+      // ✅ Text Sorting (case-insensitive)
+      return sortConfig.direction === "asc"
+        ? String(aVal).localeCompare(String(bVal), undefined, { sensitivity: "base" })
+        : String(bVal).localeCompare(String(aVal), undefined, { sensitivity: "base" });
     });
   }, [filteredData, sortConfig]);
 

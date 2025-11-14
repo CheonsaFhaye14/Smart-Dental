@@ -4,18 +4,21 @@ import { useAdminAuth } from "../hooks/useAdminAuth";
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { token } = useAdminAuth();
+  const { token } = useAdminAuth(); // token from AdminAuthProvider
 
   useEffect(() => {
     if (!token) {
-      // Use a relative path with HashRouter
-      navigate("/login", { replace: true }); // ← note the "#/"
+      // Redirect to login if not authenticated
+      navigate("/login", { replace: true });
     }
-  }, [navigate, token]);
+  }, [token, navigate]); // Re-run if token changes
+
+  if (!token) return null; // optional: render nothing while redirecting
 
   return (
     <div>
       <h1>Dashboard</h1>
+      {/* Other dashboard content */}
     </div>
   );
 }

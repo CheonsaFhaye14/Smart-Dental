@@ -22,6 +22,10 @@ export default function CustomDate({ value, onChange, placeholder, name }) {
 
   const containerRef = useRef(null);
 
+  useEffect(() => {
+  setSelectedDate(value || "");
+}, [value]);
+
   const handleDayClick = (day) => {
     const formatted = `${currentYear}-${String(currentMonth + 1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
     setSelectedDate(formatted);

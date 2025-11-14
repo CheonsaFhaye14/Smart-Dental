@@ -1,12 +1,25 @@
 import { useState, useRef, useEffect } from "react";
 import "./CustomSelect.css";
 
-export default function CustomSelect({ options, value, onChange, placeholder, name }) {
+export default function CustomSelect({ options = [], value = null, onChange, placeholder, name }) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
 
+  // Get display label for an option
+  const getOptionLabel = (opt) => {
+    if (!opt) return "";
+    if (typeof opt === "string" || typeof opt === "number") return opt;
+    return opt.label || String(opt.value || "");
+  };
+
+  // Handle selecting an option
   const handleSelect = (option) => {
-    onChange && onChange({ target: { name, value: option } });
+    let val = option;
+
+    // If option is an object, pass the full object
+    if (typeof option === "object" && option !== null) val = option;
+
+    onChange && onChange({ target: { name, value: val } });
     setOpen(false);
   };
 
@@ -21,30 +34,42 @@ export default function CustomSelect({ options, value, onChange, placeholder, na
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Display value text
+  const displayValue = value ? getOptionLabel(value) : "";
+
   return (
-    <div className="input-container custom-select-container" ref={containerRef} style={{ position: "relative" }}>
+    <div
+      className="input-container custom-select-container"
+      ref={containerRef}
+      style={{ position: "relative" }}
+    >
       <input
         type="text"
         readOnly
-        value={value || ""}
+        value={displayValue}
         className="floating-input"
-        onClick={() => setOpen(prev => !prev)}
+        onClick={() => setOpen((prev) => !prev)}
       />
-      <label className={`floating-label ${value ? "has-value" : ""}`}>
+      <label className={`floating-label ${displayValue ? "has-value" : ""}`}>
         {placeholder}
       </label>
 
       {open && (
         <ul className="dropdown-list">
-          {options.map((opt) => (
-            <li
-              key={opt}
-              className="dropdown-item"
-              onClick={() => handleSelect(opt)}
-            >
-              {opt}
-            </li>
-          ))}
+          {options.map((opt) => {
+            const key = typeof opt === "object" && opt !== null ? opt.value : opt;
+            const label = getOptionLabel(opt);
+
+            return (
+              <li
+                key={key}
+                className="dropdown-item"
+                onClick={() => handleSelect(opt)}
+              >
+                {label}
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>

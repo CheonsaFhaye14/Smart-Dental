@@ -1,3 +1,5 @@
+import Table from "../components/Table";
+
 
 export default function Appointments() {
  return (
@@ -6,6 +8,9 @@ export default function Appointments() {
         <h1>Appointment Management</h1>
         <button className="btn-add">+</button>
       </div>
+
+
+
       </>
   );
 }

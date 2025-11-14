@@ -1,4 +1,4 @@
-export function validateUserForm(formValues, fieldTemplates, currentType) {  
+export function validateForm(formValues, fieldTemplates, currentType) {  
   const fields = fieldTemplates[currentType] || [];
   const errors = {};
 
@@ -11,32 +11,37 @@ export function validateUserForm(formValues, fieldTemplates, currentType) {
       formValues[field.name] = value; // ★ auto-clean input
     }
 
+    // Determine if field is required
+    const isRequired = field.required || (typeof field.requiredIf === "function" && field.requiredIf(formValues));
+
     // Required field check
-    if (field.required && (!value || value === "")) {
+    if (isRequired && (value === undefined || value === "")) {
       errors[field.name] = `${field.placeholder} is required`;
       return;
     }
 
-    // First name & Last name: letters only + auto-clean multiple spaces
-    if ((field.name === "firstname" || field.name === "lastname") && value) {
+    // Letters only + auto-clean multiple spaces for all fields containing "name"
+    if (field.name.toLowerCase().includes("name") && value) {
       formValues[field.name] = value.replace(/\s+/g, " "); // remove double spaces
+
       if (!/^[A-Za-z\s]+$/.test(value)) {
         errors[field.name] = `${field.placeholder} must contain letters only`;
+      } else {
+        // Capitalize first letter of each word
+        formValues[field.name] = formValues[field.name]
+          .split(" ")
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+          .join(" ");
       }
     }
 
     // Username rules
     if (field.name === "username" && value) {
-      // Must be >= 4 chars
       if (value.length < 4) {
         errors[field.name] = "Username must be at least 4 characters long";
-      }
-      // No spaces allowed
-      else if (/\s/.test(value)) {
+      } else if (/\s/.test(value)) {
         errors[field.name] = "Username must not contain spaces";
-      }
-      // Must start with a letter
-      else if (!/^[A-Za-z]/.test(value)) {
+      } else if (!/^[A-Za-z]/.test(value)) {
         errors[field.name] = "Username must start with a letter";
       }
     }
@@ -75,6 +80,13 @@ export function validateUserForm(formValues, fieldTemplates, currentType) {
         errors[field.name] = "Contact must start with 09";
       } else if (value.length !== 11) {
         errors[field.name] = "Contact must be 11 digits long";
+      }
+    }
+
+    // Number type validation
+    if (field.type === "number" && value !== undefined && value !== "") {
+      if (isNaN(Number(value))) {
+        errors[field.name] = `${field.placeholder} must be a number`;
       }
     }
   });

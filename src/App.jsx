@@ -16,11 +16,14 @@ import AdminLayout from './layouts/AdminLayout';
 import { AdminAuthProvider } from './context/AdminAuthProvider';
 import { useAdminAuth } from './hooks/useAdminAuth';
 
-// Protect admin routes
+import { Navigate } from "react-router-dom";
+
 function ProtectedAdminRoute({ children }) {
   const { token } = useAdminAuth();
-  return token ? children : <PublicLayout><Login /></PublicLayout>;
+  if (!token) return <Navigate to="/login" replace />;
+  return children;
 }
+
 
 function App() {
   return (

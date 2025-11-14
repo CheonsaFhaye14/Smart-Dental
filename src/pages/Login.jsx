@@ -8,6 +8,7 @@ import ForgotPasswordModal from "../components/ForgotPasswordModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons"; // ⚡ import spinner icon
 import "./login.css";
+import { getAllUsers } from "../services/GetAllUsers";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -20,31 +21,32 @@ function Login() {
   const navigate = useNavigate();
   const { login } = useAdminAuth();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+const handleLogin = async (e) => {
+  e.preventDefault();
 
-    if (!username || !password) {
-      const msg = "Please fill in all fields";
-      setMessageType("error");
-      setMessage(msg);
-      setErrorText(msg);
-      return;
-    }
+  if (!username || !password) {
+    const msg = "Please fill in all fields";
+    setMessageType("error");
+    setMessage(msg);
+    setErrorText(msg);
+    return;
+  }
 
-    setLoading(true); // ⚡ start loading
+  setLoading(true);
 
+  try {
     const response = await loginUser(username, password);
 
-    setLoading(false); // ⚡ stop loading after response
-
     if (response.success) {
+      // ✅ Use login from context to store token
       login(response.token);
-      localStorage.setItem("adminId", response.adminId);
-      localStorage.setItem("adminUsername", response.adminUsername);
 
       setMessageType("success");
       setMessage("Login successful!");
       setErrorText("");
+
+      // ✅ Fetch users immediately using context token
+      await getAllUsers(response.token);
 
       setTimeout(() => navigate("/dashboard"), 1500);
     } else {
@@ -53,7 +55,15 @@ function Login() {
       setMessage(msg);
       setErrorText(msg);
     }
-  };
+  } catch (err) {
+    console.error("Login error:", err);
+    setMessageType("error");
+    setMessage("Unable to login. Please try again.");
+    setErrorText("Unable to login.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="login-container">

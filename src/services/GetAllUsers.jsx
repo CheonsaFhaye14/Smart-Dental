@@ -10,12 +10,26 @@ export const getAllUsers = async (token) => {
       },
     });
 
+    const users = response.data;
+
+    // Count users by type
+    const userTypeCount = users.reduce((acc, user) => {
+      const type = user.usertype || "unknown";
+      acc[type] = (acc[type] || 0) + 1;
+      return acc;
+    }, {});
+
+    console.log("Token used:", token); // Log the token
+    console.log(`Total users: ${users.length} | User count by type:`, userTypeCount);
+
     return {
       success: true,
       message: "Users fetched successfully",
-      data: response.data, // the merged list of users
+      data: users, // the merged list of users
     };
   } catch (error) {
+    console.error("Error fetching users:", error); // ✅ Log the error
+
     let errorMessage = "Unable to fetch users. Please try again.";
 
     if (error.response) {

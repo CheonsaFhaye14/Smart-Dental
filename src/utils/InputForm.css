@@ -10,7 +10,7 @@
   font-size: 1rem;
   border: 1px solid #bfdbfe; /* blue-200 */
   border-radius: 25px;
-  background: #fff;
+  /* background: #fff; */
   outline: none;
   box-sizing: border-box;
   transition: border-color 0.3s, box-shadow 0.3s;
@@ -34,10 +34,10 @@
 
 .floating-input:focus + .floating-label,
 .has-value {
-  top: 0.2rem;
+  top: 0.1rem;
   left: 1rem;
   font-size: 0.85rem;
   color: #60a5fa; /* blue-400 */
-  background: #fff;
+  /* background: #fff; */
   padding: 0 0.25rem;
 }

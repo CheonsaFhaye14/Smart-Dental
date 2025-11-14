@@ -118,3 +118,92 @@
   font-weight: 500;
   color: #2e3b5f;
 }
+/* Expanded table wrapper for nested tables */
+.expanded-table-wrapper {
+  margin: 10px 0;
+  border: 1px solid #dfe3e8;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0px 4px 12px rgba(150, 160, 180, 0.08);
+}
+
+/* Force all columns to be equal width */
+.custom-table,
+.nested-table {
+  table-layout: fixed; /* makes all columns fixed width */
+}
+
+.custom-table th,
+.custom-table td,
+.nested-table th,
+.nested-table td {
+  width: calc(100% / var(--column-count)); /* dynamically divide width */
+  text-align: left; /* keeps your text alignment */
+  overflow: hidden; /* prevents overflow text */
+  text-overflow: ellipsis; /* shows ... for long text */
+  white-space: nowrap; /* keeps content in single line */
+}
+
+/* Nested table */
+.nested-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(180, 190, 210, 0.1);
+}
+
+/* Nested table header */
+.nested-table thead tr {
+  background: #4aa3e0;
+  color: #ffffff;
+}
+
+.nested-table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13.5px;
+  border-bottom: 2px solid #3b8cc0;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.nested-table th:hover {
+  background: #3b8cc0;
+}
+
+/* Nested table rows */
+.nested-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #eef2fb;
+  font-size: 13px;
+  color: #2e3b5f;
+}
+
+.nested-table tbody tr:hover {
+  background: #f0f8ff;
+}
+
+/* Action buttons inside nested table */
+.nested-table td > .action-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+/* Optional: make nested table slightly indented */
+.expanded-table-wrapper {
+  margin-left: 20px;
+}
+
+/* Optional: rounded corners for first and last row of nested table */
+.nested-table tbody tr:first-child td {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.nested-table tbody tr:last-child td {
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}

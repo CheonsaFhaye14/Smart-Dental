@@ -6,14 +6,16 @@ const ShowInfoModal = ({ row, onClose }) => {
   if (!row) return null;
 
   // Filter out null/undefined, id, is_deleted, and any function fields (like onEdit/onDelete)
-  const displayedFields = Object.entries(row).filter(
-    ([key, value]) =>
-      value !== null &&
-      value !== undefined &&
-      key !== "id" &&
-      key !== "is_deleted" &&
-      typeof value !== "function"
-  );
+const displayedFields = Object.entries(row).filter(
+  ([key, value]) =>
+    value !== null &&
+    value !== undefined &&
+    value !== "" && // <-- hide empty strings
+    value.toString().trim() !== "" && // <-- hide whitespace-only values
+    key !== "id" &&
+    key !== "is_deleted" &&
+    typeof value !== "function"
+);
 
   const capitalizeWords = (str) =>
     str
@@ -41,9 +43,21 @@ const ShowInfoModal = ({ row, onClose }) => {
             <div className="input-container" key={key}>
               <FloatingInput
                 name={key}
-                value={key === "created_at" ? formatDateTime(value) : value.toString()}
+value={
+ key === "created_at" || key === "updated_at"
+  ? formatDateTime(value)
+  : key === "birthdate"
+  ? new Date(value).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    })
+  : key === "gender"
+  ? capitalizeWords(value.toString())
+  : value.toString()
+}
                 placeholder={capitalizeWords(key)}
-                readOnly={true}
+disabled={true}
               />
             </div>
           ))}
