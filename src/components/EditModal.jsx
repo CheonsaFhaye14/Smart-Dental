@@ -17,33 +17,68 @@ useEffect(() => {
   fields.forEach((f) => {
     let value;
 
+    /* ------------------------------
+       CHECKBOX
+    ------------------------------ */
     if (f.type === "checkbox") {
       value = data?.[f.name] ?? f.defaultValue ?? false;
-    } 
-   else if (f.type === "select-multiple") {
-  const current = data?.[f.name] || f.defaultValue || [];
-  value = current.map(v => {
-    if (v.label !== undefined && v.value !== undefined) return { label: v.label, value: Number(v.value) };
-    if (v.name !== undefined && v.value !== undefined) return { label: v.name, value: Number(v.value) };
-    return { label: String(v), value: Number(v) };
-  });
-}
+    }
 
+    /* ------------------------------
+       MULTI-SELECT
+    ------------------------------ */
+    else if (f.type === "select-multiple") {
+      const current = data?.[f.name] || f.defaultValue || [];
+      value = current.map(v => {
+        if (v.label !== undefined && v.value !== undefined) return { label: v.label, value: Number(v.value) };
+        if (v.name !== undefined && v.value !== undefined) return { label: v.name, value: Number(v.value) };
+        return { label: String(v), value: Number(v) };
+      });
+    }
+
+    /* ------------------------------
+       SINGLE SELECT
+    ------------------------------ */
     else if (f.type === "select") {
-      // ✅ Map existing {name, value} object to the object expected by CustomSelect
       const current = data?.[f.name] || f.defaultValue || null;
-      value = current ? { label: current.name, value: Number(current.value) } : null;
-    } 
+
+      if (!current) {
+        value = null;
+      } 
+      // Already {label, value}
+      else if (current.label !== undefined && current.value !== undefined) {
+        value = { label: current.label, value: current.value };
+      } 
+      // {name, id} shape
+      else if (current.name !== undefined && current.id !== undefined) {
+        value = { label: current.name, value: Number(current.id) };
+      } 
+      // {name, value} shape
+      else if (current.name !== undefined && current.value !== undefined) {
+        value = { label: current.name, value: Number(current.value) };
+      } 
+      // primitive fallback
+      else {
+        value = f.options?.find(opt => opt.value === current) || null;
+      }
+    }
+
+    /* ------------------------------
+       DEFAULT INPUT
+    ------------------------------ */
     else {
       value = data?.[f.name] ?? f.defaultValue ?? "";
     }
 
-    // Apply normalization if provided
+    /* ------------------------------
+       NORMALIZATION
+    ------------------------------ */
     if (f.normalize && typeof f.normalize === "function") {
       value = f.normalize(value);
     }
 
     initValues[f.name] = value;
+
     if (f.type === "password") passState[f.name] = false;
   });
 
@@ -51,9 +86,7 @@ useEffect(() => {
   setShowPasswordFields(passState);
 
   console.log("📄 Form initialized with values:");
-  fields.forEach(f => {
-    console.log(`- ${f.name}:`, initValues[f.name]);
-  });
+  fields.forEach(f => console.log(`- ${f.name}:`, initValues[f.name]));
 }, [data, fields]);
 
   if (!isOpen || !data) return null;

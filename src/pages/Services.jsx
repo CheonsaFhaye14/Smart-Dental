@@ -216,98 +216,141 @@ else if (tableType === "service") {
 
 };
 
-const handleEdit = (item, type) => { 
+const handleEdit = (item, type) => {  
   console.log("🔹 Editing item:", item);
   console.log("🔹 Editing type:", type);
   console.log("🔹 Current services state:", services);
 
-  // Clone templates to avoid mutating the original
+  // Clone templates so you don't mutate originals
   const fieldsCopy = JSON.parse(JSON.stringify(serviceFieldTemplates));
-  console.log("🔹 Cloned field templates:", fieldsCopy);
 
+  /* ======================================================
+     CATEGORY EDIT
+  ====================================================== */
   if (type === "Category") {
     const noCategory = services.find(cat => cat.name === "No Category");
     const unlinkedServices = noCategory?.services || [];
 
     const categoryField = fieldsCopy.Category.find(f => f.name === "services");
+
     if (categoryField) {
-      // Combine unlinked + already connected, remove duplicates
       const combinedOptions = [
-        ...unlinkedServices.map(s => ({ label: s.name, value: String(s.id) })),
-        ...(item.services || []).map(s => ({ label: s.name, value: String(s.id) }))
+        ...unlinkedServices.map(s => ({
+          label: s.name,
+          value: String(s.id)
+        })),
+        ...(item.services || []).map(s => ({
+          label: s.name,
+          value: String(s.id)
+        }))
       ];
 
-      // Remove duplicates based on value
       const uniqueOptions = Array.from(
         new Map(combinedOptions.map(o => [o.value, o])).values()
       );
+
       categoryField.options = uniqueOptions;
 
-      // Preselect already connected services
       categoryField.defaultValue = (item.services || []).map(s => ({
         label: s.name,
-        value: String(s.id) // must match `value` used in options
+        value: String(s.id)
       }));
     }
-  } else if (type === "Service") {
+
+  } 
+  
+  
+  /* ======================================================
+     SERVICE EDIT
+  ====================================================== */
+  else if (type === "Service") {
+
+    /* CATEGORY SELECT */
     const serviceCategoryField = fieldsCopy.Service.find(f => f.name === "category");
+
+    let cleanedCategoryValue = null;
+
     if (serviceCategoryField) {
       const options = services
         .filter(cat => cat.name !== "No Category")
-        .map(cat => ({ label: cat.name, value: String(cat.id) }));
+        .map(cat => ({
+          label: cat.name,
+          value: String(cat.id)
+        }));
 
       serviceCategoryField.options = options;
 
-      // Preselect the category this service belongs to
-      serviceCategoryField.defaultValue = item.categories
-        ? { label: services.find(cat => cat.id === item.categories)?.name, value: String(item.categories) }
+      const selectedCategory = services.find(cat => cat.id === item.categories);
+
+      cleanedCategoryValue = selectedCategory
+        ? {
+            label: selectedCategory.name,
+            value: String(selectedCategory.id)
+          }
         : null;
 
-      console.log("🔹 Service options:", options);
-      console.log("🔹 Service preselected category:", serviceCategoryField.defaultValue);
+      serviceCategoryField.defaultValue = cleanedCategoryValue;
     }
 
-    // ✅ Convert allow_installment boolean to Yes/No
+    /* ALLOW INSTALLMENT SELECT */
     const installmentField = fieldsCopy.Service.find(f => f.name === "allow_installment");
+
+    let cleanedInstallmentValue = null;
+
     if (installmentField) {
       installmentField.options = [
         { label: "Yes", value: true },
         { label: "No", value: false }
       ];
 
-      // Preselect the current value
-      installmentField.defaultValue = item.allow_installment
+      cleanedInstallmentValue = item.allow_installment
         ? { label: "Yes", value: true }
         : { label: "No", value: false };
 
-      console.log("🔹 Installment field options:", installmentField.options);
-      console.log("🔹 Installment preselected:", installmentField.defaultValue);
+      installmentField.defaultValue = cleanedInstallmentValue;
     }
+
+    // -------------------------------------------
+    // OVERRIDE RAW VALUES HERE SO item DOESN'T BREAK IT
+    // -------------------------------------------
+    item = {
+      ...item,
+      categories: cleanedCategoryValue,
+      allow_installment: cleanedInstallmentValue
+    };
   }
 
+  /* ======================================================
+     CONNECTED INFO
+  ====================================================== */
   const connectedInfo = type === "Category"
-    ? { 
-        categoryName: item.name,      // category name
-        services: (item.services || []).map(s => ({ 
-          name: s.name, 
-          value: Number(s.id)        // value as number
+    ? {
+        services: (item.services || []).map(s => ({
+          label: s.name,
+          value: String(s.id)
         }))
       }
-    : { 
-        connectedCategory: services.find(cat => cat.id === item.categories)
-          ? { name: services.find(cat => cat.id === item.categories).name, value: Number(item.categories) }
-          : null 
+    : {
+        connectedCategory: item.categories
       };
 
-  console.log("🔹 Connected info for payload:", connectedInfo);
+  /* ======================================================
+     FINAL PAYLOAD (SAFE)
+  ====================================================== */
+  const editDataPayload = {
+    ...item,              // now item contains cleaned values
+    type,
+    fields: fieldsCopy[type],
+    ...connectedInfo
+  };
 
-  // Set edit data including updated fields and connected info
-  const editDataPayload = { ...item, type, fields: fieldsCopy[type], ...connectedInfo };
-  console.log("🔹 Final editData payload:", editDataPayload);
+  console.log("🔹 FINAL editData payload (SAFE):", editDataPayload);
 
   setEditData(editDataPayload);
   setEditModalOpen(true);
 };
+
+
 
 
 
