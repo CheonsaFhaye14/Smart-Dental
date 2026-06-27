@@ -1,99 +1,185 @@
+/* ── Shell ─────────────────────────────────────────── */
 .admin-layout {
   display: flex;
   min-height: 100vh;
-  background-color: #ffffff;
+  background-color: #f4f7fb;
 }
 
-/* --- Sidebar --- */
+/* ── Backdrop (mobile only) ─────────────────────────── */
+.admin-backdrop {
+  display: none;
+}
+
+/* ── Navbar ─────────────────────────────────────────── */
+.admin-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  z-index: 1001;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: 1rem;
+}
+
+/* Hamburger button (rendered inside AdminNavbar, hidden on desktop) */
+.admin-navbar .menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #087aaa;
+  padding: 4px 8px;
+  border-radius: 6px;
+  line-height: 1;
+}
+
+/* ── Sidebar ─────────────────────────────────────────── */
 .admin-sidebar {
   position: fixed;
   top: 0;
   left: 0;
   height: 100%;
-  width: 60px; /* collapsed */
+  width: 60px;                    /* collapsed */
+  background: #0d1b2a;
+  z-index: 900;
   transition: width 0.3s ease;
-  z-index: 900; /* BELOW navbar now */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding-top: 64px;              /* sit below navbar */
 }
 
+/* Expand on hover (desktop) */
 .admin-sidebar:hover {
   width: 220px;
 }
 
-/* --- Navbar --- */
-.admin-navbar {
-  position: fixed;
-  top: 0;
-  left: 0; /* stays full width */
-  width: 100%;
-  z-index: 1001; /* 🔼 higher than sidebar */
-}
-
-/* --- Content --- */
+/* ── Content ─────────────────────────────────────────── */
 .admin-content {
-  margin-left: 60px; /* match collapsed sidebar */
-  margin-top: 80px; /* height of navbar */
-  padding: 20px 40px;
+  margin-left: 60px;              /* collapsed sidebar width */
+  margin-top: 64px;               /* navbar height */
+  padding: 2rem 2.5rem;
   flex: 1;
   transition: margin-left 0.3s ease;
+  min-width: 0;                   /* prevents flex blowout */
 }
 
-/* Move content when sidebar expands (navbar stays fixed) */
+/* Shift content when sidebar expands (desktop hover) */
 .admin-sidebar:hover ~ .admin-content {
   margin-left: 220px;
 }
 
-/* --- Page Titles inside content --- */
-.admin-content h1 {
-  display: inline-block; /* underline fits the text width only */
-  font-size: 2rem;
-  padding-right: 15px;
-  color: #087aaa; /* deep navy blue */
-  font-weight: 700;
-  border-color: white;
-  border-radius: 20px;
-  margin-bottom: 20px;
-  text-shadow: 0 0 6px rgba(117, 197, 241, 0.3); /* soft glow */
-  border-bottom: 2px solid #a6d4f5;
-  padding-bottom: 10px;
-  padding-left: 12px;
-  font-family: "Poppins", sans-serif;
-  letter-spacing: 0.5px;
+/* ── Page title + add button row ─────────────────────── */
+.same-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
-/* --- Add Button --- */
+.admin-content h1 {
+  display: inline-block;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: #087aaa;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #a6d4f5;
+  padding: 0 12px 10px 12px;
+  margin: 0;
+  text-shadow: 0 0 6px rgba(117, 197, 241, 0.3);
+}
+
+/* ── Add button ──────────────────────────────────────── */
 .btn-add {
   background-color: #6bb8fa;
-  margin-left: 15px;
-  margin-top: 11px;
   color: white;
   border: none;
-  border-radius: 50%; /* makes it circular */
-  width: 45px;
-  height: 45px;
-  font-size: 1.8rem; /* makes the '+' large */
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  font-size: 1.6rem;
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(107, 184, 250, 0.4);
-  transition: all 0.3s ease;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+  flex-shrink: 0;
 }
 
-.btn-add:hover {
-  background-color: #3ea5ff;
-  box-shadow: 0 6px 12px rgba(62, 165, 255, 0.5);
-  transform: scale(1.05);
+.btn-add:hover  { background-color: #3ea5ff; box-shadow: 0 6px 12px rgba(62,165,255,0.5); }
+.btn-add:active { transform: scale(0.93); }
+
+/* ── Tablet (≤ 1024px) ──────────────────────────────── */
+@media (max-width: 1024px) {
+  .admin-content {
+    padding: 1.5rem;
+  }
 }
 
-.btn-add:active {
-  transform: scale(0.95);
-}
-/* --- Same Row (title + button) --- */
-.same-row {
-  display: flex;
-  flex-wrap: wrap; 
-  
+/* ── Mobile (≤ 768px) ──────────────────────────────── */
+@media (max-width: 768px) {
+  /* Show hamburger in navbar */
+  .admin-navbar .menu-toggle {
+    display: flex;
+  }
+
+  /* Sidebar becomes an off-canvas drawer */
+  .admin-sidebar {
+    width: 240px;
+    left: -240px;                 /* hidden off screen */
+    z-index: 1000;
+    padding-top: 0;
+    transition: left 0.25s ease;
+  }
+
+  /* Slide in when .sidebar-open is on .admin-layout */
+  .admin-layout.sidebar-open .admin-sidebar {
+    left: 0;
+  }
+
+  /* Backdrop overlay */
+  .admin-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+  }
+
+  /* Content takes full width — no margin for sidebar */
+  .admin-content {
+    margin-left: 0;
+    margin-top: 64px;
+    padding: 1.25rem 1rem;
+  }
+
+  /* Prevent desktop hover expand on mobile */
+  .admin-sidebar:hover {
+    width: 240px;
+  }
+
+  .admin-sidebar:hover ~ .admin-content {
+    margin-left: 0;
+  }
 }
 
+/* ── Small phones (≤ 480px) ─────────────────────────── */
+@media (max-width: 480px) {
+  .admin-content {
+    padding: 1rem 0.75rem;
+  }
 
+  .admin-content h1 {
+    font-size: 1.3rem;
+  }
+}

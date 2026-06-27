@@ -1,0 +1,68 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: clamp(8px, 1.2vw, 12px) clamp(18px, 3vw, 32px);
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: clamp(0.82rem, 1.2vw, 1rem);
+  font-family: 'Varela Round', sans-serif;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* ── Primary ──────────────────────────────────────── */
+.btn-primary {
+  background-color: #75c5f1;
+  color: white;
+  box-shadow: 0 4px 10px rgba(117, 197, 241, 0.5);
+}
+
+.btn-primary:hover:not([disabled]):not([aria-disabled="true"]) {
+  background-color: #4aa3e0;
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 6px 15px rgba(74, 163, 224, 0.6);
+}
+
+.btn-primary:active:not([disabled]):not([aria-disabled="true"]) {
+  transform: scale(0.98) translateY(0);
+}
+
+/* ── Outline / secondary (e.g. Cancel buttons) ───────── */
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid #cce7ff;
+  color: #3d6b81;
+  box-shadow: none;
+}
+
+.btn-outline:hover:not([disabled]):not([aria-disabled="true"]) {
+  background: #f0f8fe;
+  border-color: #75c5f1;
+  color: #0d3b66;
+}
+
+/* ── Disabled / loading ──────────────────────────────── */
+.btn[disabled],
+.btn[aria-disabled="true"] {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ── Mobile (≤ 480px) ──────────────────────────────── */
+@media (max-width: 480px) {
+  .btn-primary,
+  .btn-outline {
+    width: 100%;
+    text-align: center;
+  }
+}

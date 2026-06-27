@@ -1,50 +1,58 @@
 import './App.css';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
+import { Suspense, lazy } from 'react';
+import GlobalSpinner from './components/ui/Globalspinner';
 
-import HomePage from './pages/HomePage';
-import Login from './pages/Login';
-import About from './pages/About';
-import Download from './pages/Download';
+// ✅ Updated path
+const Home = lazy(() => import('./features/public/pages/Home'));
+const LearnMore = lazy(() => import('./features/public/pages/LearnMore'));
+const DownloadApp = lazy(() => import('./features/public/pages/DownloadApp'));
+const Login = lazy(() => import('./features/auth/pages/Login'));
+const ResetPassword = lazy(() => import('./features/auth/pages/ResetPassword'));
+
 import Dashboard from './pages/Dashboard';
 import Appointments from './pages/Appointments';
 import Services from './pages/Services';
 import Users from './pages/Users';
-import ResetPassword from './pages/ResetPassword';
 
 import PublicLayout from './layouts/PublicLayout';
 import AdminLayout from './layouts/AdminLayout';
+
 import { AdminAuthProvider } from './context/AdminAuthProvider';
 import { useAdminAuth } from './hooks/useAdminAuth';
 
-import { Navigate } from "react-router-dom";
-
-function ProtectedAdminRoute({ children }) {
+function ProtectedAdminRoute() {
   const { token } = useAdminAuth();
   if (!token) return <Navigate to="/login" replace />;
-  return children;
+  return <AdminLayout><Outlet /></AdminLayout>;
 }
-
 
 function App() {
   return (
     <AdminAuthProvider>
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
-        <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
-        <Route path="/download" element={<PublicLayout><Download /></PublicLayout>} />
-        <Route path="/login" element={<PublicLayout><Login /></PublicLayout>} />
-        <Route path="/reset-password" element={<PublicLayout><ResetPassword /></PublicLayout>} />
+      <Suspense fallback={<GlobalSpinner />}>
+        <Routes>
 
-        {/* Admin Routes */}
-        <Route path="/dashboard" element={<ProtectedAdminRoute><AdminLayout><Dashboard /></AdminLayout></ProtectedAdminRoute>} />
-        <Route path="/users" element={<ProtectedAdminRoute><AdminLayout><Users /></AdminLayout></ProtectedAdminRoute>} />
-        <Route path="/services" element={<ProtectedAdminRoute><AdminLayout><Services /></AdminLayout></ProtectedAdminRoute>} />
-        <Route path="/appointments" element={<ProtectedAdminRoute><AdminLayout><Appointments /></AdminLayout></ProtectedAdminRoute>} />
+        {/* ── Public layout route (one wrapper for all) ── */}
+        <Route element={<PublicLayout />}>
+          <Route path="/"               element={<Home />}        />
+          <Route path="/learn-more"    element={<LearnMore />}   />
+          <Route path="/DownloadApp"      element={<DownloadApp />}    />
+          <Route path="/login"         element={<Login />}       />
+          <Route path="/reset-password" element={<ResetPassword />}/>
+          <Route path="*"              element={<Home />}        />
+        </Route>
 
-        {/* Fallback for unmatched routes */}
-        <Route path="*" element={<PublicLayout><HomePage /></PublicLayout>} />
+        {/* ── Protected admin routes ── */}
+        <Route element={<ProtectedAdminRoute />}>
+          <Route path="/dashboard"    element={<Dashboard />}   />
+          <Route path="/users"        element={<Users />}       />
+          <Route path="/services"     element={<Services />}    />
+          <Route path="/appointments" element={<Appointments />}/>
+        </Route>
+
       </Routes>
+      </Suspense>
     </AdminAuthProvider>
   );
 }

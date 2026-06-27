@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+/* ── Outer wrapper ──────────────────────────────────── */
+.app-input__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+}
+
+/* ── Field container ────────────────────────────────── */
+.app-input__field {
+  position: relative;
+  width: 100%;
+}
+
+/* ── Input ──────────────────────────────────────────── */
+.app-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 25px;
+  border: 1.5px solid #cce7ff;
+  outline: none;
+  font-size: 0.95rem;
+  font-family: 'Varela Round', sans-serif;
+  background: #f7fcff;
+  color: #0d3b66;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.2s ease;
+  box-sizing: border-box;
+}
+
+.app-input[type="text"],
+.app-input[type="email"],
+.app-input[type="number"] {
+  padding-right: 1.1rem;
+}
+
+.app-input__field--focused .app-input {
+  border-color: #75c5f1;
+  box-shadow: 0 0 0 3px rgba(117, 197, 241, 0.2);
+  background: #ffffff;
+}
+
+.app-input__field--error .app-input {
+  border-color: #e57373;
+  box-shadow: 0 0 0 3px rgba(229, 115, 115, 0.15);
+}
+
+.app-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #eaf4fb;
+}
+
+/* ── Floating label ─────────────────────────────────── */
+.app-input__label {
+  position: absolute;
+  left: 1.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.95rem;
+  font-family: 'Varela Round', sans-serif;
+  color: #7ab3cc;
+  pointer-events: none;
+  transition: top 0.2s ease, transform 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+  padding: 0 0.25rem;
+  background: transparent;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+/* floated — sits on the border */
+.app-input__label--float {
+  top: 0;
+  transform: translateY(-50%);
+  font-size: 0.72rem;
+  color: #75c5f1;
+  background: #ffffff;
+}
+
+.app-input__field--focused .app-input__label--float {
+  color: #4aa3e0;
+}
+
+.app-input__field--error .app-input__label--float {
+  color: #e57373;
+}
+
+/* ── Eye icon ───────────────────────────────────────── */
+.app-input__eye {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #3d6b81;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.app-input__eye:hover {
+  color: #75c5f1;
+  transform: translateY(-50%) scale(1.15);
+}
+
+/* ── Error message ──────────────────────────────────── */
+.app-input__error {
+  font-size: 0.82rem;
+  color: #b30000;
+  margin: 0;
+  padding-left: 1rem;
+}

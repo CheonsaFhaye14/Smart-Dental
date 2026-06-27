@@ -1,0 +1,8 @@
+/* Login page — just centers the card, nothing else */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 48px - 40px); /* viewport minus navbar and footer */
+  padding: 1rem;
+}

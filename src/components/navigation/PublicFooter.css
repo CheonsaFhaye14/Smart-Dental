@@ -1,0 +1,45 @@
+/* ── Footer ─────────────────────────────────────────── */
+.public-footer {
+  text-align: center;
+  padding: 0.5rem 1.5rem;  /* ↓ was 1rem — cuts height in half */
+  background-color: rgba(117, 197, 241, 0.85);
+  color: white;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem 2rem;
+}
+
+.footer-content p  { margin: 0; font-size: 0.8rem; }  /* ↓ was 0.9rem */
+.footer-content a  { color: white; text-decoration: underline; }
+
+/* ── Mobile (≤ 768px) ──────────────────────────────── */
+@media (max-width: 768px) {
+  .public-footer {
+    padding: 0.5rem 1rem;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .footer-content p {
+    font-size: 0.75rem;
+  }
+}
+
+/* ── Small phones (≤ 480px) ─────────────────────────── */
+@media (max-width: 480px) {
+  .footer-content a {
+    display: inline-block;
+    padding: 2px 0;
+    word-break: break-all;
+  }
+}

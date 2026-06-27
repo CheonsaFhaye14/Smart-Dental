@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../config"; // Make sure this points to your backend
+import { BASE_URL } from "../../../config";
 
 // ---------------- Login ----------------
 export const loginUser = async (username, password) => {

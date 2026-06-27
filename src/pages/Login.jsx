@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../services/LoginApi";
+import { loginUser } from "../features/auth/services/LoginApi";
 import MessageModal from "../components/MessageModal";
 import ShowPasswordInput from "../utils/ShowPasswordInput";
 import { useAdminAuth } from "../hooks/useAdminAuth";

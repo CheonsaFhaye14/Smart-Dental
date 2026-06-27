@@ -1,0 +1,89 @@
+@import url('https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css');
+
+/* Fixed wrapper, top-center — no backdrop, no blur, doesn't block the page */
+.toast-wrapper {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99999;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+/* Soft pastel pill */
+.toast {
+  pointer-events: all;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  font-family: 'Varela Round', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  max-width: 90vw;
+  white-space: normal;
+  animation: toastIn 0.35s ease-out, toastOut 2.2s forwards;
+}
+
+.toast__icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* 🩵 Info */
+.toast--info {
+  background: #e1f4fd;
+  color: #0d3b66;
+}
+
+/* 💔 Error */
+.toast--error {
+  background: #ffe5e5;
+  color: #b30000;
+}
+
+/* 💚 Success */
+.toast--success {
+  background: #e3fbe9;
+  color: #006633;
+}
+
+/* Drop in from above, settle */
+@keyframes toastIn {
+  0% {
+    transform: translateY(-16px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Fade + drift up just before unmount, synced with the 2.2s auto-close timer */
+@keyframes toastOut {
+  0%, 78% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 480px) {
+  .toast-wrapper {
+    top: 16px;
+  }
+
+  .toast {
+    font-size: 0.85rem;
+    padding: 0.6rem 1.1rem;
+  }
+}

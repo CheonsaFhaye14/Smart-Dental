@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "start": "npm run dev",
     "predeploy": "npm run build",
-  "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -19,6 +19,8 @@
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@fortawesome/react-fontawesome": "^3.1.0",
     "@mui/x-date-pickers": "^8.16.0",
+    "@supabase/supabase-js": "^2.108.2",
+    "@tabler/icons-webfont": "^3.44.0",
     "axios": "^1.13.1",
     "dayjs": "^1.11.19",
     "flowbite": "^3.1.2",
@@ -26,7 +28,7 @@
     "react": "^19.1.1",
     "react-day-picker": "^9.11.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^7.9.4"
+    "react-router-dom": "^7.18.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

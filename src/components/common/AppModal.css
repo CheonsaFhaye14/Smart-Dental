@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+/* ── Blur #root when modal open ─────────────────────── */
+body.modal-open #root {
+  filter: blur(4px);
+  transition: filter 0.2s ease;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ── Overlay ─────────────────────────────────────────── */
+.app-modal__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 59, 102, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 1rem;
+}
+
+/* ── Card ────────────────────────────────────────────── */
+.app-modal__card {
+  position: relative;
+  background: linear-gradient(160deg, #e8f6fd 0%, #d0ecfa 50%, #c2e4f7 100%);
+  border-radius: 32px;
+  border: 2.5px solid #75c5f1;
+  padding: clamp(1.75rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.5rem);
+  width: 100%;
+  font-family: 'Varela Round', sans-serif;
+  animation: app-modal-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+  box-shadow:
+    0 0 0 5px rgba(117, 197, 241, 0.15),
+    0 12px 40px rgba(13, 59, 102, 0.12);
+}
+
+
+
+/* soft blue bubble decorations */
+.app-modal__card::after {
+  content: "";
+  position: absolute;
+  bottom: -40px;
+  right: -40px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(117, 197, 241, 0.12), transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Header ──────────────────────────────────────────── */
+.app-modal__header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+
+.app-modal__title {
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  color: #0d3b66;
+  margin: 0 0 0.4rem;
+  letter-spacing: 0.01em;
+}
+
+.app-modal__subtitle {
+  font-size: 0.88rem;
+  color: #5a8fa8;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── Body ────────────────────────────────────────────── */
+.app-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+
+
+/* ── Springy pop-in ──────────────────────────────────── */
+@keyframes app-modal-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0)     scale(1);   }
+}
+
+
+
+/* ── Mobile ──────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .app-modal__card {
+    border-radius: 24px;
+  }
+}

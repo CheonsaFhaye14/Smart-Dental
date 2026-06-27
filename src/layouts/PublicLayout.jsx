@@ -1,25 +1,18 @@
-import React from "react"; 
-import PublicNavbar from "../components/PublicNavbar"; 
-import './PublicLayout.css'; 
+import { Outlet } from "react-router-dom";
+import PublicNavbar from "../components/navigation/PublicNavbar";
+import PublicFooter from "../components/navigation/PublicFooter";
+import "./PublicLayout.css";
 
-export default function PublicLayout({ children }) {
+export default function PublicLayout() {
   return (
     <div className="public-layout">
-      {/* Navbar at the top */}
       <PublicNavbar />
 
-      {/* Page content */}
       <main className="public-content">
-        {children}
+        <Outlet />
       </main>
 
-      {/* Footer with contact info */}
-      <footer className="public-footer">
-        <div className="footer-content">
-          <p>&copy; {new Date().getFullYear()} Smart Dental Clinic. All rights reserved.</p>
-          <p>Contact Us: <a href="mailto:info@toothpix.com">toothpixo0o@gmail.com</a></p>
-        </div>
-      </footer>
+      <PublicFooter />
     </div>
   );
 }
