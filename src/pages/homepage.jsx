@@ -10,7 +10,7 @@ const HomePage = () => {
       <p className="subtitle">
         Experience dental care like never before with our 3D dental visualization system!
       </p>
-      <a href="/DownloadApp" className="cta-button">Get the App</a>
+      <a href="/downloadapp" className="cta-button">Get the App</a>
     </section>
 
     {/* Highlights Section */}

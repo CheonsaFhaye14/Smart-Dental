@@ -1,0 +1,1 @@
+// UsersDetails component displays detailed information about a specific user. It is used in the Users page to provide a detailed view of a selected user. It should display all relevant user information, including personal details, contact information, role, status, and any other relevant data.

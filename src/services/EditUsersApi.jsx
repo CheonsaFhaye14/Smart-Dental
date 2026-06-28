@@ -5,9 +5,6 @@ import { BASE_URL } from "../config";
 // ---------------- Edit Existing User (Admin Only) ----------------
 export const editUser = async (token, authUid, updatedUserData) => {
   try {
-    console.log("✏️ Editing user (auth_uid):", authUid);
-    console.log("📤 Updated user data:", updatedUserData);
-    console.log("🔐 Token used:", token);
 
     const response = await axios.put(
       `${BASE_URL}/users/edit/${authUid}`, // ✅ use auth_uid

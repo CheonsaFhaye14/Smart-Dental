@@ -53,7 +53,7 @@ function LearnMore() {
       <div className="learnmore-cta">
         <SectionCard title="Ready to Get Started?" centered>
           <p>Download our app now and explore your 3D dental experience!</p>
-          <Button text="Download the App" onClick={() => navigate('/DownloadApp')} />
+          <Button text="Download the App" onClick={() => navigate('/downloadapp')} />
         </SectionCard>
       </div>
 

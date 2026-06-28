@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import AdminNavbar from "../components/AdminNavbar";
-import AdminSidebar from "../components/AdminSidebar";
+import AdminNavbar from "../components/navigation/AdminNavbar";
+import AdminSidebar from "../components/navigation/AdminSidebar";
 import "./AdminLayout.css";
 
 export default function AdminLayout({ children }) {

@@ -19,10 +19,20 @@ export default function ResetPassword() {
   const [fieldErrors, setFieldErrors] = useState({ newPassword: "", confirmPassword: "" });
 
   const navigate = useNavigate();
-  const hashParams = new URLSearchParams(window.location.hash.substring(1));
-  const token = hashParams.get("access_token");
 
-  const handleSubmit = async (e) => {
+  // ✅ Extract token from the second # in the URL
+  const getTokenFromUrl = () => {
+    const hash = window.location.hash;
+    const secondHash = hash.indexOf('#', 1);
+    if (secondHash !== -1) {
+      return new URLSearchParams(hash.substring(secondHash + 1)).get('access_token');
+    }
+    return null;
+  };
+
+  const token = getTokenFromUrl(); // ✅ this line was missing
+
+  const handleSubmit = async (e) => {  // ✅ this was missing too
     e.preventDefault();
     setErrorText("");
 
@@ -37,12 +47,10 @@ export default function ResetPassword() {
     setLoading(false);
 
     if (response.success) {
-      // ✅ success → toast only, then navigate away
       setMessageType("success");
       setMessage(response.message);
       setTimeout(() => navigate("/login"), 2000);
     } else {
-      // ❌ failure → inline text only, stays on page so the user can retry
       setErrorText(response.message);
     }
   };

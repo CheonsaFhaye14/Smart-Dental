@@ -1,0 +1,1 @@
+// UsersAuditLog component displays a log of user activities and actions. It is used in the Users page to provide an audit trail of user actions for security and accountability purposes. It should display a list of actions performed by users, including timestamps, action types, and any relevant details.

@@ -1,10 +1,11 @@
 import React from "react";
-import { useAdminAuth } from "../hooks/useAdminAuth";
+import { useAdminAuth } from "../../hooks/useAdminAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faRightFromBracket, faBars } from "@fortawesome/free-solid-svg-icons";
+import logo from "../../assets/image.png"; // ✅ same logo as public
 import "./AdminNavbar.css";
 
-export default function AdminNavbar() {
+export default function AdminNavbar({ onMenuToggle }) {
   const { logout } = useAdminAuth();
 
   const handleLogout = () => {
@@ -16,9 +17,15 @@ export default function AdminNavbar() {
 
   return (
     <nav className="admin-navbar">
-      <div className="navbar-logo">
-        <img src="" alt="Dental Clinic Logo" height="40" />
-        <span>Smart Dental Admin Portal</span>
+      <div className="navbar-left">
+        <button className="menu-toggle" onClick={onMenuToggle} aria-label="Toggle menu">
+          <FontAwesomeIcon icon={faBars} />
+        </button>
+
+        <div className="navbar-logo">
+          <img src={logo} alt="Dental Clinic Logo" />
+          <span>Admin Portal</span>
+        </div>
       </div>
 
       <div className="navbar-actions">

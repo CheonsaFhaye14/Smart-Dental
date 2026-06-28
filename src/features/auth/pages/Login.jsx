@@ -5,8 +5,8 @@ import { loginUser } from "../services/authApi";
 import { useAdminAuth } from "../../../hooks/useAdminAuth";
 import { validateLoginForm, hasErrors } from "../validators/authValidator";
 import MessageModal from "../../../components/ui/MessageModal";
-import LoginCard from "../components/sections/LoginCard";
-import ForgotPasswordModal from "../components/modals/ForgotPasswordModal";
+import LoginCard from "../components/LoginCard";
+import ForgotPasswordModal from "../modals/ForgotPasswordModal";
 import "./login.css";
 
 function Login() {

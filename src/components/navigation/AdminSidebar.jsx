@@ -8,28 +8,39 @@ import "./AdminSidebar.css";
 export default function AdminSidebar() {
   return (
     <aside className="admin-sidebar">
-        <div className="sidebar-header"></div>
+
       <nav className="sidebar-nav">
-        <NavLink to="/dashboard" className="sidebar-link">
+        <NavLink to="/dashboard" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
           <FontAwesomeIcon icon={faHome} className="sidebar-icon" />
           <span className="sidebar-text">Dashboard</span>
         </NavLink>
 
-        <NavLink to="/users" className="sidebar-link">
+        <hr className="sidebar-divider" />
+
+        <NavLink to="/users" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
           <FontAwesomeIcon icon={faUsers} className="sidebar-icon" />
           <span className="sidebar-text">Users</span>
         </NavLink>
 
-        <NavLink to="/services" className="sidebar-link">
+        <hr className="sidebar-divider" />
+
+        <NavLink to="/services" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
           <FontAwesomeIcon icon={faBriefcase} className="sidebar-icon" />
           <span className="sidebar-text">Services</span>
         </NavLink>
 
-        <NavLink to="/appointments" className="sidebar-link">
+        <hr className="sidebar-divider" />
+
+        <NavLink to="/appointments" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
           <FontAwesomeIcon icon={faCalendar} className="sidebar-icon" />
           <span className="sidebar-text">Appointments</span>
         </NavLink>
       </nav>
+
+    <div className="sidebar-footer">
+  <span className="sidebar-footer-icon">©</span>
+  <span className="sidebar-footer-text">2026 Smart Dental Clinic</span>
+</div>
     </aside>
   );
 }

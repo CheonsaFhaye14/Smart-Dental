@@ -1,0 +1,1 @@
+// UsersStatsCards component displays a set of statistical cards with titles and values. shows total number of users, active users, admins, dentist,and patients. It is used in the Users page to provide a quick overview of user statistics.

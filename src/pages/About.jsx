@@ -39,7 +39,7 @@ function About() {
       <section className="about-section cta-section">
         <h2>Ready to Get Started?</h2>
         <p>Download our app now and explore your 3D dental experience!</p>
-        <a href="/DownloadApp" className="cta-button">Download the App</a>
+        <a href="/downloadapp" className="cta-button">Download the App</a>
       </section>
     </div>
   );

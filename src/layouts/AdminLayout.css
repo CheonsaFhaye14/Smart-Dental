@@ -2,7 +2,7 @@
 .admin-layout {
   display: flex;
   min-height: 100vh;
-  background-color: #f4f7fb;
+  background-color: #f0f8ff; /* ✅ very light blue-white, not grey */
 }
 
 /* ── Backdrop (mobile only) ─────────────────────────── */
@@ -10,67 +10,19 @@
   display: none;
 }
 
-/* ── Navbar ─────────────────────────────────────────── */
-.admin-navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 64px;
-  z-index: 1001;
-  background: #ffffff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  display: flex;
-  align-items: center;
-  padding: 0 1.5rem;
-  gap: 1rem;
-}
-
-/* Hamburger button (rendered inside AdminNavbar, hidden on desktop) */
-.admin-navbar .menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.4rem;
-  cursor: pointer;
-  color: #087aaa;
-  padding: 4px 8px;
-  border-radius: 6px;
-  line-height: 1;
-}
-
-/* ── Sidebar ─────────────────────────────────────────── */
-.admin-sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 60px;                    /* collapsed */
-  background: #0d1b2a;
-  z-index: 900;
-  transition: width 0.3s ease;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  padding-top: 64px;              /* sit below navbar */
-}
-
-/* Expand on hover (desktop) */
-.admin-sidebar:hover {
-  width: 220px;
-}
+/* ❌ DELETE the entire .admin-sidebar block from here */
 
 /* ── Content ─────────────────────────────────────────── */
 .admin-content {
-  margin-left: 60px;              /* collapsed sidebar width */
-  margin-top: 64px;               /* navbar height */
+  margin-left: 60px;
+  margin-top: 48px;
   padding: 2rem 2.5rem;
   flex: 1;
   transition: margin-left 0.3s ease;
-  min-width: 0;                   /* prevents flex blowout */
+  min-width: 0;
 }
 
-/* Shift content when sidebar expands (desktop hover) */
+/* Shift content when sidebar expands */
 .admin-sidebar:hover ~ .admin-content {
   margin-left: 220px;
 }
@@ -128,26 +80,16 @@
 
 /* ── Mobile (≤ 768px) ──────────────────────────────── */
 @media (max-width: 768px) {
-  /* Show hamburger in navbar */
   .admin-navbar .menu-toggle {
     display: flex;
   }
 
-  /* Sidebar becomes an off-canvas drawer */
-  .admin-sidebar {
-    width: 240px;
-    left: -240px;                 /* hidden off screen */
-    z-index: 1000;
-    padding-top: 0;
-    transition: left 0.25s ease;
-  }
+  /* ❌ DELETE .admin-sidebar block from here too */
 
-  /* Slide in when .sidebar-open is on .admin-layout */
   .admin-layout.sidebar-open .admin-sidebar {
     left: 0;
   }
 
-  /* Backdrop overlay */
   .admin-backdrop {
     display: block;
     position: fixed;
@@ -156,16 +98,10 @@
     z-index: 999;
   }
 
-  /* Content takes full width — no margin for sidebar */
   .admin-content {
     margin-left: 0;
-    margin-top: 64px;
+    margin-top: 48px;
     padding: 1.25rem 1rem;
-  }
-
-  /* Prevent desktop hover expand on mobile */
-  .admin-sidebar:hover {
-    width: 240px;
   }
 
   .admin-sidebar:hover ~ .admin-content {

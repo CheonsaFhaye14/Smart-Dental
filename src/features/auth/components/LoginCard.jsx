@@ -1,6 +1,6 @@
-import Card from "../../../../components/ui/Card";
-import AppInput from "../../../../components/common/AppInput";
-import Button from "../../../../components/ui/Button";
+import Card from "../../../components/ui/Card";
+import AppInput from "../../../components/common/AppInput";
+import Button from "../../../components/ui/Button";
 import "./LoginCard.css";
 
 function LoginCard({

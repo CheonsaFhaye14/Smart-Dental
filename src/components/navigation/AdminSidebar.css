@@ -1,0 +1,230 @@
+/* ── Sidebar shell ───────────────────────────────────── */
+.admin-sidebar {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  height: calc(100vh - 48px);
+  width: 60px;
+  background: #e8f6fd;
+  border-right: 2px dashed #b8ddf5;
+  box-shadow: 3px 0 14px rgba(117, 197, 241, 0.18);
+  z-index: 900;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0 16px 16px 0;
+}
+
+.admin-sidebar:hover {
+  width: 220px;
+}
+
+/* ── Header block ────────────────────────────────────── */
+.sidebar-header {
+  background: linear-gradient(135deg, #75c5f1 0%, #4daee8 100%);
+  margin: 10px 8px 6px;
+  border-radius: 12px;
+  padding: 10px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  min-height: 40px;
+  box-shadow: 0 3px 10px rgba(77, 174, 232, 0.3);
+}
+
+.sidebar-header-icon {
+  font-size: 1.1rem;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.sidebar-header-text {
+  font-size: 0.82rem;
+  font-family: 'Varela Round', sans-serif;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  transition: opacity 0.25s ease, max-width 0.3s ease;
+}
+
+.admin-sidebar:hover .sidebar-header-text {
+  opacity: 1;
+  max-width: 140px;
+}
+
+/* ── Divider ─────────────────────────────────────────── */
+.sidebar-divider {
+  height: 1px;
+  border: none;
+  border-top: 1.5px dashed #b8ddf5;
+  margin: 4px 12px;
+}
+
+/* ── Nav ─────────────────────────────────────────────── */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 8px;
+  gap: 2px;
+  width: 100%;
+  flex: 1;
+}
+
+/* ── Links ───────────────────────────────────────────── */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  color: #2a7ab8;
+  text-decoration: none;
+  border-radius: 50px;
+  border: 1.5px solid transparent;
+  background: transparent;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.sidebar-link:hover {
+  background: rgba(117, 197, 241, 0.18);
+  border-color: #a6d4f5;
+  color: #1a5f9a;
+}
+
+.sidebar-link.active {
+  background: #75c5f1;
+  border-color: #4daee8;
+  color: #fff;
+  box-shadow: 0 3px 12px rgba(117, 197, 241, 0.45);
+}
+
+.sidebar-link.active .sidebar-icon {
+  color: #fff;
+}
+
+.sidebar-link.active:hover {
+  background: #5ab8ee;
+}
+
+/* ── Icon ────────────────────────────────────────────── */
+.sidebar-icon {
+  font-size: 1.1rem;
+  width: 22px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4a9fd4;
+  transition: color 0.2s ease;
+}
+
+/* ── Text ────────────────────────────────────────────── */
+.sidebar-text {
+  margin-left: 0;
+  font-size: 0.88rem;
+  font-family: 'Varela Round', sans-serif;
+  font-weight: 500;
+  color: inherit;
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  transition: opacity 0.2s ease, max-width 0.3s ease, margin-left 0.25s ease;
+  white-space: nowrap;
+}
+
+.admin-sidebar:hover .sidebar-text {
+  opacity: 1;
+  max-width: 140px;
+  margin-left: 10px;
+}
+
+/* ── Footer ──────────────────────────────────────────── */
+.sidebar-footer {
+  padding: 10px 8px 14px;
+  border-top: 1.5px dashed #b8ddf5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.sidebar-footer-icon {
+  font-size: 0.78rem;
+  color: #75c5f1;
+  flex-shrink: 0;
+}
+
+.sidebar-footer-text {
+  font-size: 0.72rem;
+  font-family: 'Varela Round', sans-serif;
+  color: #75c5f1;
+  white-space: nowrap;
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  transition: opacity 0.2s ease, max-width 0.3s ease;
+}
+
+.admin-sidebar:hover .sidebar-footer-text {
+  opacity: 1;
+  max-width: 160px;
+}
+
+/* ── Mobile (single merged block) ───────────────────── */
+@media (max-width: 768px) {
+  .admin-sidebar {
+    top: 0;
+    height: 100vh;
+    width: 240px;
+    left: -240px;
+    z-index: 1000;
+    padding-top: 48px;
+    border-radius: 0;
+    transition: left 0.25s ease;
+  }
+
+  .admin-sidebar:hover {
+    width: 240px;
+  }
+
+  .admin-layout.sidebar-open .admin-sidebar {
+    left: 0;
+  }
+
+  /* Override hover-text on mobile */
+  .admin-sidebar:hover .sidebar-text,
+  .admin-sidebar:hover .sidebar-header-text,
+  .admin-sidebar:hover .sidebar-footer-text {
+    opacity: 0;
+    max-width: 0;
+    margin-left: 0;
+  }
+
+  /* Show everything when drawer is open */
+  .admin-layout.sidebar-open .admin-sidebar .sidebar-text,
+  .admin-layout.sidebar-open .admin-sidebar:hover .sidebar-text {
+    opacity: 1;
+    max-width: 160px;
+    margin-left: 10px;
+  }
+
+  .admin-layout.sidebar-open .admin-sidebar .sidebar-header-text,
+  .admin-layout.sidebar-open .admin-sidebar:hover .sidebar-header-text {
+    opacity: 1;
+    max-width: 140px;
+  }
+
+  .admin-layout.sidebar-open .admin-sidebar .sidebar-footer-text,
+  .admin-layout.sidebar-open .admin-sidebar:hover .sidebar-footer-text {
+    opacity: 1;
+    max-width: 160px;
+  }
+}

@@ -1,0 +1,1 @@
+// UsersTable component displays a table of users with their details. It is used in the Users page to provide a detailed view of all users in the system. should also have a search bar and filter by role and status. It should also have pagination and sorting capabilities. Each row should have action buttons for editing and disabling the user.

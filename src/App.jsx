@@ -10,10 +10,11 @@ const DownloadApp = lazy(() => import('./features/public/pages/DownloadApp'));
 const Login = lazy(() => import('./features/auth/pages/Login'));
 const ResetPassword = lazy(() => import('./features/auth/pages/ResetPassword'));
 
+const Users = lazy(() => import('./features/users/Users'));
+
 import Dashboard from './pages/Dashboard';
 import Appointments from './pages/Appointments';
 import Services from './pages/Services';
-import Users from './pages/Users';
 
 import PublicLayout from './layouts/PublicLayout';
 import AdminLayout from './layouts/AdminLayout';
@@ -37,7 +38,7 @@ function App() {
         <Route element={<PublicLayout />}>
           <Route path="/"               element={<Home />}        />
           <Route path="/learn-more"    element={<LearnMore />}   />
-          <Route path="/DownloadApp"      element={<DownloadApp />}    />
+          <Route path="/downloadapp"      element={<DownloadApp />}    />
           <Route path="/login"         element={<Login />}       />
           <Route path="/reset-password" element={<ResetPassword />}/>
           <Route path="*"              element={<Home />}        />

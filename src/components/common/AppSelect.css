@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+/* ── Wrapper ─────────────────────────────────────────── */
+.app-select__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+  padding-top: 0.5rem;
+  position: relative;  /* anchor for absolute dropdown */
+}
+
+/* ── Field — owns the border ────────────────────────── */
+.app-select__field {
+  position: relative;
+  width: 100%;
+  border: 1.5px solid #88c8e8;
+  border-radius: 25px;
+  background: #f7fcff;           /* fills corners so border shows */
+  overflow: visible;             /* lets floating label show above border */
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.2s ease;
+}
+
+.app-select__field--focused {
+  border-color: #75c5f1;
+  border-bottom-color: transparent;
+  box-shadow: 0 0 0 3px rgba(117, 197, 241, 0.2);
+  border-radius: 25px 25px 0 0;
+  background: #ffffff;
+}
+
+.app-select__field--error {
+  border-color: #e57373;
+  box-shadow: 0 0 0 3px rgba(229, 115, 115, 0.15);
+}
+
+/* ── Trigger — no border, field owns it ─────────────── */
+.app-select__trigger {
+  width: 100%;
+  padding: 1rem 2.75rem 1rem 1.1rem;
+  border-radius: 25px;
+  border: none;                 /* border lives on .app-select__field */
+  outline: none;
+  font-size: 0.95rem;
+  font-family: 'Varela Round', sans-serif;
+  background: transparent;  /* field bg shows through — no corner overlap */
+  color: #0d3b66;
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.5;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  transition: background 0.2s ease;
+  width: 100%;
+}
+
+.app-select__field--focused .app-select__trigger {
+  border-radius: 25px 25px 0 0;
+}
+
+.app-select__trigger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #eaf4fb;
+}
+
+.app-select__value--empty {
+  color: transparent;
+}
+
+/* ── Arrow ───────────────────────────────────────────── */
+.app-select__arrow {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7ab3cc;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  transition: transform 0.25s ease, color 0.2s ease;
+}
+
+.app-select__arrow--open {
+  transform: translateY(-50%) rotate(180deg);
+  color: #75c5f1;
+}
+
+/* ── Floating label — identical to .app-input__label ── */
+.app-select__label {
+  position: absolute;
+  left: 1.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.95rem;
+  font-family: 'Varela Round', sans-serif;
+  color: #7ab3cc;
+  pointer-events: none;
+  transition: top 0.2s ease, transform 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+  padding: 0 0.25rem;
+  background: transparent;
+  border-radius: 4px;
+  line-height: 1;
+  white-space: nowrap;
+  z-index: 1;  /* above field border */
+}
+
+.app-select__label--float {
+  top: 0;
+  transform: translateY(-50%);
+  font-size: 0.72rem;
+  color: #75c5f1;
+  background: #f7fcff;
+  z-index: 2;  /* above border line */
+}
+
+/* when open, bg switches to white (trigger bg also becomes white) */
+.app-select__field--focused .app-select__label--float {
+  color: #4aa3e0;
+  background: #ffffff;
+}
+
+.app-select__field--error .app-select__label--float {
+  color: #e57373;
+}
+
+/* ── Dropdown ────────────────────────────────────────── */
+.app-select__dropdown {
+  position: absolute;
+  top: calc(100% - 2px);  
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1.5px solid #75c5f1;
+  border-top: none;  /* connects to field border above */
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 0 0 3px rgba(117, 197, 241, 0.2);
+  clip-path: inset(0 -3px -3px -3px); /* clips top, keeps left/right/bottom */  z-index: 100;
+  overflow: hidden;
+  animation: dropdown-in 0.15s ease;
+}
+
+/* ── Options ─────────────────────────────────────────── */
+.app-select__option {
+  padding: 0.7rem 1.1rem;
+  font-size: 0.92rem;
+  font-family: 'Varela Round', sans-serif;
+  color: #0d3b66;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.15s ease;
+}
+
+.app-select__option:hover {
+  background: #e8f6fd;
+}
+
+.app-select__option--active {
+  background: linear-gradient(90deg, #d0ecfa, #e8f6fd);
+  color: #1a5f9a;
+  font-weight: 600;
+}
+
+.app-select__option--active:hover {
+  background: linear-gradient(90deg, #c2e4f7, #d8f0fb);
+}
+
+.app-select__option--empty {
+  color: #7ab3cc;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #e8f6fd;
+}
+
+.app-select__check {
+  color: #75c5f1;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.app-select__option:last-child {
+  border-radius: 0 0 18px 18px;
+}
+
+/* ── Animation ───────────────────────────────────────── */
+@keyframes dropdown-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Error message ───────────────────────────────────── */
+.app-select__error {
+  font-size: 0.82rem;
+  color: #b30000;
+  margin: 0;
+  padding-left: 1rem;
+}

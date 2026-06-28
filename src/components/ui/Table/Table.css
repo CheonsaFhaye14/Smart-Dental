@@ -1,0 +1,291 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+/* ── Wrapper ─────────────────────────────────────────── */
+.table-wrapper {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1.5px dashed #b8ddf5;
+  box-shadow: 0 4px 16px rgba(117, 197, 241, 0.12);
+  font-family: 'Varela Round', sans-serif;
+}
+
+/* ── Toolbar — single row ────────────────────────────── */
+.table-toolbar {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 10;
+  overflow: visible;
+  flex-wrap: nowrap;         /* keep everything on one row */
+}
+
+/* search takes fixed width, doesn't grow */
+.table-toolbar > .app-input__wrapper {
+  flex: 0 0 200px;           /* fixed 200px, won't shrink or grow */
+  min-width: 0;
+}
+
+/* filters row fills remaining space */
+.table-filters {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  flex: 1;                   /* takes all remaining space */
+  min-width: 0;
+  position: relative;
+  z-index: 10;
+  overflow: visible;
+  flex-wrap: nowrap;
+}
+
+/* each filter select equal width */
+.table-filters > * {
+  flex: 1;
+  min-width: 0;
+}
+
+/* buttons stay on same row, don't shrink */
+.table-toolbar-btns {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  align-items: center;
+  padding-top: 0.5rem;       /* align with input tops (offset for floating label) */
+}
+
+/* ── Toolbar Buttons ─────────────────────────────────── */
+.btn-showall {
+  background: #75c5f1;
+  color: #fff;
+  border: 1.5px solid #4daee8;
+  border-radius: 50px;
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  font-family: 'Varela Round', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-showall:hover {
+  background: #4daee8;
+  transform: translateY(-1px);
+}
+
+.btn-reset {
+  background: #f0f8ff;
+  color: #2a7ab8;
+  border: 1.5px dashed #b8ddf5;
+  border-radius: 50px;
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  font-family: 'Varela Round', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-reset:hover:not(:disabled) {
+  background: #d0eaf8;
+  border-color: #75c5f1;
+  transform: translateY(-1px);
+}
+
+.btn-reset:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Table scroll wrapper ────────────────────────────── */
+.table-scroll {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1.5px solid #d0eaf8;
+}
+
+/* ── Table ───────────────────────────────────────────── */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+/* ── Header ──────────────────────────────────────────── */
+.custom-table thead tr {
+  background: linear-gradient(135deg, #75c5f1 0%, #4daee8 100%);
+}
+
+.custom-table th {
+  padding: 11px 14px;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 2px solid #4daee8;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.custom-table th.sortable {
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.custom-table th.sortable:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.sort-icon {
+  font-size: 0.7rem;
+  margin-left: 4px;
+  opacity: 0.7;
+}
+
+.actions-th {
+  text-align: center;
+  width: 120px;
+}
+
+/* ── Rows ────────────────────────────────────────────── */
+.custom-table td {
+  padding: 10px 14px;
+  border-bottom: 1px dashed #d0eaf8;
+  color: #2a7ab8;
+  font-size: 0.85rem;
+}
+
+.custom-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.custom-table tbody tr:hover {
+  background: #f0f8ff;
+}
+
+.actions-td {
+  text-align: center;
+}
+
+/* ── No data ─────────────────────────────────────────── */
+.no-data {
+  text-align: center;
+  padding: 28px;
+  color: #a6d4f5;
+  font-size: 0.88rem;
+  font-style: italic;
+}
+
+/* ── Pagination ──────────────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  background: #f0f8ff;
+  color: #2a7ab8;
+  border: 1.5px solid #b8ddf5;
+  border-radius: 50px;
+  padding: 5px 14px;
+  font-size: 0.82rem;
+  font-family: 'Varela Round', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.page-btn:hover:not(:disabled) {
+  background: #75c5f1;
+  color: #fff;
+  border-color: #4daee8;
+}
+
+.page-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.page-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1.5px solid #b8ddf5;
+  background: #f0f8ff;
+  color: #2a7ab8;
+  font-size: 0.8rem;
+  font-family: 'Varela Round', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-num:hover {
+  background: #d0eaf8;
+  border-color: #75c5f1;
+}
+
+.page-num.active {
+  background: #75c5f1;
+  color: #fff;
+  border-color: #4daee8;
+  box-shadow: 0 2px 8px rgba(117, 197, 241, 0.4);
+}
+
+/* ── Mobile (≤ 768px) — stack vertically ────────────── */
+@media (max-width: 768px) {
+  .table-wrapper {
+    padding: 14px;
+  }
+
+  .table-toolbar {
+    flex-wrap: wrap;           /* allow wrapping on mobile */
+  }
+
+  .table-toolbar > .app-input__wrapper {
+    flex: 1 1 100%;            /* full width on mobile */
+  }
+
+  .table-filters {
+    flex-wrap: wrap;
+    flex: 1 1 100%;
+  }
+
+  .table-filters > * {
+    flex: 1 1 calc(50% - 4px); /* 2 per row on mobile */
+  }
+
+  .table-toolbar-btns {
+    width: 100%;
+    justify-content: flex-end;
+    padding-top: 0;
+  }
+
+  .btn-showall,
+  .btn-reset {
+    flex: 1;
+    text-align: center;
+  }
+
+  .custom-table th,
+  .custom-table td {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+}
