@@ -1,7 +1,7 @@
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
 import HighlightCard from '../../../components/ui/HighlightCard';
-import Button from '../../../components/ui/Button';
+import Button from '../../../components/ui/Buttons/Button';
 
 const highlights = [
   {

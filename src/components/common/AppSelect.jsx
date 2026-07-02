@@ -45,9 +45,9 @@ function AppSelect({
           onClick={() => !disabled && setOpen((o) => !o)}
           disabled={disabled}
         >
-          <span className={`app-select__value ${!selected ? "app-select__value--empty" : ""}`}>
-            {selected ? selected.label : ""}
-          </span>
+            <span className={`app-select__value ${!selected ? "app-select__value--empty" : ""}`}>
+            {selected ? selected.label : "\u00A0"}
+            </span>
         </button>
 
         {label && (
@@ -86,7 +86,9 @@ function AppSelect({
         </div>
       )}
 
-      {error && <p className="app-select__error">{error}</p>}
+<p className={`app-select__error ${error ? "app-select__error--visible" : ""}`}>
+  {error || "\u00A0"}
+</p>
     </div>
   );
 }

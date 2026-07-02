@@ -1,7 +1,7 @@
 import React from "react";
 import './DownloadApp.css';
-import Card from "../../../components/ui/Card";
-import Button from "../../../components/ui/Button";
+import Card from "../../../components/ui/Cards/Card";
+import Button from "../../../components/ui/Buttons/Button";
 
 function DownloadApp() {
   return (

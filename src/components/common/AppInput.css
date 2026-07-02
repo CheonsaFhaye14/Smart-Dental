@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
 
 /* ── Outer wrapper ──────────────────────────────────── */
 .app-input__wrapper {
@@ -17,7 +16,7 @@
 /* ── Input ──────────────────────────────────────────── */
 .app-input {
   width: 100%;
-  padding: 1rem;
+  padding: .5rem;  
   border-radius: 25px;
   border: 1.5px solid #88c8e8;
   outline: none;
@@ -105,11 +104,46 @@
   color: #75c5f1;
   transform: translateY(-50%) scale(1.15);
 }
+/* ── Left icon ──────────────────────────────────────── */
+.app-input__icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7ab3cc;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.app-input__field--focused .app-input__icon {
+  color: #75c5f1;
+}
+
+/* shift input text right when icon present */
+.app-input--has-icon {
+  padding-left: 2.5rem;
+}
+
+/* shift floating label right when icon present */
+.app-input__label--with-icon {
+  left: 2.5rem;
+}
 
 /* ── Error message ──────────────────────────────────── */
 .app-input__error {
+  min-height: 1.1rem;
   font-size: 0.82rem;
+  line-height: 1.1rem;
   color: #b30000;
   margin: 0;
   padding-left: 1rem;
+  visibility: hidden;
 }
+
+.app-input__error--visible {
+  visibility: visible;
+}
+

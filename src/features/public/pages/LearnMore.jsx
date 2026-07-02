@@ -1,6 +1,6 @@
 import './LearnMore.css';
 import { useNavigate } from 'react-router-dom';
-import Button from '../../../components/ui/Button';
+import Button from '../../../components/ui/Buttons/Button';
 import SectionCard from '../../../components/ui/SectionCard';
 
 function LearnMore() {

@@ -3,7 +3,7 @@ import { forgotPassword } from "../services/authApi";
 import { validateEmail } from "../validators/authValidator";
 import AppModal from "../../../components/common/AppModal";
 import AppInput from "../../../components/common/AppInput";
-import Button from "../../../components/ui/Button";
+import Button from "../../../components/ui/Buttons/Button";
 import "./ForgotPasswordModal.css";
 
 export default function ForgotPasswordModal({ onClose, setMessage, setMessageType }) {

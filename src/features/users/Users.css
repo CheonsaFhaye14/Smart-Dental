@@ -1,0 +1,18 @@
+.same-row > .app-input__wrapper,
+.same-row > .app-select__wrapper {
+  width: auto;    /* override the 100% default */
+  flex: 0 0 200px; /* fixed width, same as table toolbar search */
+}
+.same-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.same-row h1 {
+  margin: 0;           /* removes default top/bottom margin browsers add to h1 */
+  line-height: 1;      /* stops line-height inflating its box */
+  white-space: nowrap; /* stops it wrapping mid-word if row gets tight */
+}

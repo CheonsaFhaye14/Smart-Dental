@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
 
 /* ── Wrapper ─────────────────────────────────────────── */
 .table-wrapper {
@@ -13,18 +12,18 @@
 /* ── Toolbar — single row ────────────────────────────── */
 .table-toolbar {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
   margin-bottom: 14px;
   position: relative;
   z-index: 10;
   overflow: visible;
-  flex-wrap: nowrap;         /* keep everything on one row */
+  flex-wrap: wrap;         /* keep everything on one row */
 }
 
 /* search takes fixed width, doesn't grow */
 .table-toolbar > .app-input__wrapper {
-  flex: 0 0 200px;           /* fixed 200px, won't shrink or grow */
+  flex: 0 0 350px;           /* fixed 350px, won't shrink or grow */
   min-width: 0;
 }
 
@@ -32,9 +31,9 @@
 .table-filters {
   display: flex;
   gap: 8px;
-  align-items: flex-start;
+  align-items: center;
   flex: 1;                   /* takes all remaining space */
-  min-width: 0;
+  min-width: 220px;
   position: relative;
   z-index: 10;
   overflow: visible;
@@ -43,17 +42,16 @@
 
 /* each filter select equal width */
 .table-filters > * {
-  flex: 1;
-  min-width: 0;
+  flex: 1;                   /* equal width */
+  min-width: 100px;  /* prevents shrinking too small */
 }
 
 /* buttons stay on same row, don't shrink */
 .table-toolbar-btns {
   display: flex;
   gap: 8px;
-  flex-shrink: 0;
   align-items: center;
-  padding-top: 0.5rem;       /* align with input tops (offset for floating label) */
+  position: relative;
 }
 
 /* ── Toolbar Buttons ─────────────────────────────────── */
@@ -113,6 +111,8 @@
   width: 100%;
   border-collapse: collapse;
   background: #ffffff;
+  min-width: 700px;  /* prevents shrinking too small on mobile */
+  table-layout: fixed;
 }
 
 /* ── Header ──────────────────────────────────────────── */
@@ -147,9 +147,11 @@
   opacity: 0.7;
 }
 
+/* Actions column now sizes to its own content (button widths),
+   same as every other column — no fixed width fighting it */
 .actions-th {
   text-align: center;
-  width: 120px;
+  white-space: nowrap;
 }
 
 /* ── Rows ────────────────────────────────────────────── */
@@ -170,6 +172,7 @@
 
 .actions-td {
   text-align: center;
+  white-space: nowrap;
 }
 
 /* ── No data ─────────────────────────────────────────── */
@@ -283,9 +286,10 @@
     text-align: center;
   }
 
-  .custom-table th,
-  .custom-table td {
-    padding: 8px 10px;
-    font-size: 0.8rem;
-  }
+.custom-table th,
+.custom-table td {
+  width: auto; /* let table-layout: fixed handle equal division */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 }

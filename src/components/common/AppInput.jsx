@@ -12,6 +12,7 @@ function AppInput({
   error,
   disabled = false,
   className = "",
+  icon,          // ← new prop
   ...rest
 }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,13 +20,18 @@ function AppInput({
 
   const isPassword = type === "password";
   const inputType = isPassword ? (showPassword ? "text" : "password") : type;
-
-  // label floats when focused OR has a value
   const isFloating = focused || (value !== undefined && value !== "");
 
   return (
     <div className={`app-input__wrapper ${className}`}>
       <div className={`app-input__field ${error ? "app-input__field--error" : ""} ${focused ? "app-input__field--focused" : ""}`}>
+
+        {/* Left icon */}
+        {icon && (
+          <span className="app-input__icon">
+            <FontAwesomeIcon icon={icon} />
+          </span>
+        )}
 
         <input
           type={inputType}
@@ -33,20 +39,18 @@ function AppInput({
           onChange={onChange}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          placeholder={label ? "" : placeholder} /* hide placeholder when using floating label */
+          placeholder={label ? "" : placeholder}
           disabled={disabled}
-          className="app-input"
+          className={`app-input ${icon ? "app-input--has-icon" : ""}`}
           {...rest}
         />
 
-        {/* Floating label */}
         {label && (
-          <label className={`app-input__label ${isFloating ? "app-input__label--float" : ""}`}>
+          <label className={`app-input__label ${icon ? "app-input__label--with-icon" : ""} ${isFloating ? "app-input__label--float" : ""}`}>
             {label}
           </label>
         )}
 
-        {/* Eye icon for password */}
         {isPassword && (
           <span
             className="app-input__eye"
@@ -58,7 +62,9 @@ function AppInput({
         )}
       </div>
 
-      {error && <p className="app-input__error">{error}</p>}
+<p className={`app-input__error ${error ? "app-input__error--visible" : ""}`}>
+  {error || "\u00A0"}
+</p>
     </div>
   );
 }

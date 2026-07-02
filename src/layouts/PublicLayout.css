@@ -30,6 +30,16 @@
   box-sizing: border-box;
 }
 
+/* ── Page title + add button row ─────────────────────── */
+.same-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+
 /* ── Mobile (≤ 768px) ──────────────────────────────── */
 @media (max-width: 768px) {
   .public-layout {

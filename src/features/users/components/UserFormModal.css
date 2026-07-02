@@ -1,0 +1,84 @@
+.user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 640px;
+  font-family: "Varela Round", sans-serif;
+}
+
+/* ── Section grouping ─────────────────────────────────── */
+.user-form__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.user-form__section-title {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #4aa3e0;
+  padding-bottom: 0.35rem;
+  border-bottom: 1.5px solid #e3edf7;
+}
+
+/* ── Two-column responsive grid ────────────────────────── */
+.user-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem clamp(0.75rem, 2vw, 1.25rem);
+}
+
+.user-form__grid > * {
+  min-width: 0;
+}
+
+.user-form__wide {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 560px) {
+  .user-form__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* NOTE: removed the forced height: 3rem override —
+   AppInput/AppSelect/AppDatePicker now size themselves consistently */
+
+/* ── Error text ─────────────────────────────────────────── */
+.user-form__error {
+  margin: 0;
+  padding: 0.65rem 1rem;
+  border-radius: 0.75rem;
+  background: #fdecec;
+  color: #c62828;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* ── Actions row ────────────────────────────────────────── */
+.user-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e3edf7;
+}
+
+@media (max-width: 480px) {
+  .user-form__actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .user-form__actions > * {
+    width: 100%;
+  }
+}
+

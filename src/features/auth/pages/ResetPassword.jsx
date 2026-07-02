@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppInput from "../../../components/common/AppInput";
-import MessageModal from "../../../components/ui/MessageModal";
-import Card from "../../../components/ui/Card";
-import Button from "../../../components/ui/Button";
+import MessageModal from "../../../components/ui/Modals/MessageModal";
+import Card from "../../../components/ui/Cards/Card";
+import Button from "../../../components/ui/Buttons/Button";
 import PasswordRequirements from "../../../components/ui/PasswordRequirements";
 import { resetPassword } from "../services/authApi";
 import { validateResetPasswordForm, hasErrors } from "../validators/authValidator";

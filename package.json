@@ -25,6 +25,7 @@
     "dayjs": "^1.11.19",
     "flowbite": "^3.1.2",
     "flowbite-react": "^0.12.10",
+    "jwt-decode": "^4.0.0",
     "react": "^19.1.1",
     "react-day-picker": "^9.11.1",
     "react-dom": "^19.1.1",

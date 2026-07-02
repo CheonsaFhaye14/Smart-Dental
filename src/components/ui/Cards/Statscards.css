@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+/* ── Grid ────────────────────────────────────────────── */
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+/* ── Card ────────────────────────────────────────────── */
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  border: 1.5px dashed #b8ddf5;
+  border-radius: 16px;
+  padding: 16px 18px;
+  box-shadow: 0 4px 14px rgba(117, 197, 241, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(117, 197, 241, 0.2);
+}
+
+/* ── Icon circle ─────────────────────────────────────── */
+.stat-card__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+/* ── Info ────────────────────────────────────────────── */
+.stat-card__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.stat-card__value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-family: 'Varela Round', sans-serif;
+  color: #0d3b66;
+  line-height: 1.1;
+}
+
+.stat-card__label {
+  font-size: 0.78rem;
+  font-family: 'Varela Round', sans-serif;
+  color: #7ab3cc;
+  white-space: nowrap;
+}
+
+/* ── Variant icon colors ─────────────────────────────── */
+.stat-card--default .stat-card__icon {
+  background: linear-gradient(135deg, #75c5f1, #4daee8);
+}
+
+.stat-card--active .stat-card__icon,
+.stat-card--success .stat-card__icon {
+  background: linear-gradient(135deg, #6fdb8f, #2e9e4f);
+}
+
+.stat-card--inactive .stat-card__icon,
+.stat-card--danger .stat-card__icon {
+  background: linear-gradient(135deg, #f5908f, #d96666);
+}
+
+.stat-card--admin .stat-card__icon,
+.stat-card--warning .stat-card__icon {
+  background: linear-gradient(135deg, #f5b95e, #c9852e);
+}
+
+.stat-card--dentist .stat-card__icon,
+.stat-card--purple .stat-card__icon {
+  background: linear-gradient(135deg, #8ea3f0, #5a6fd8);
+}
+
+.stat-card--patient .stat-card__icon,
+.stat-card--blue .stat-card__icon {
+  background: linear-gradient(135deg, #75c5f1, #2a7ab8);
+}
+
+.stat-card--pending .stat-card__icon {
+  background: linear-gradient(135deg, #f5d76e, #d4a017);
+}
+
+/* ── Tablet ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .stats-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── Mobile ──────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .stats-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-card {
+    padding: 12px 14px;
+  }
+
+  .stat-card__icon {
+    width: 36px;
+    height: 36px;
+    font-size: 0.95rem;
+  }
+
+  .stat-card__value {
+    font-size: 1.2rem;
+  }
+}

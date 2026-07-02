@@ -1,0 +1,73 @@
+.action-buttons {
+  display: flex;
+  flex-direction: row;   /* same row by default */
+  flex-wrap: wrap;       /* wraps to vertical when width is small */
+  gap: 6px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border: none;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-family: 'Varela Round', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex: 0 0 auto;        /* don't stretch, size to content */
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Variants ────────────────────────────────────────── */
+.action-btn--edit {
+  background: #75c5f1;
+  color: #fff;
+}
+.action-btn--edit:hover:not(:disabled) {
+  background: #4daee8;
+  transform: translateY(-1px);
+}
+
+.action-btn--success {
+  background: #d6f5d6;
+  color: #27ae60;
+}
+.action-btn--success:hover:not(:disabled) {
+  background: #c2eec2;
+  transform: translateY(-1px);
+}
+
+.action-btn--warning {
+  background: #fff3e0;
+  color: #c9852e;
+}
+.action-btn--warning:hover:not(:disabled) {
+  background: #ffe8c2;
+  transform: translateY(-1px);
+}
+
+.action-btn--danger {
+  background: #ffd6d6;
+  color: #c0392b;
+}
+.action-btn--danger:hover:not(:disabled) {
+  background: #ffb8b8;
+  transform: translateY(-1px);
+}
+
+.action-btn--default {
+  background: #f0f8ff;
+  color: #2a7ab8;
+  border: 1.5px dashed #b8ddf5;
+}
+.action-btn--default:hover:not(:disabled) {
+  background: #d0eaf8;
+}

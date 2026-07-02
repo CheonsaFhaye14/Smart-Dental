@@ -1,6 +1,8 @@
 import React, { useMemo, useState } from "react";
 import "./Table.css";
 import AppInput from "../../common/AppInput";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+
 
 const Table = ({
   columns = [],        // { header, accessor, render?, filterFn? }
@@ -116,6 +118,7 @@ const Table = ({
       <div className="table-toolbar">
         <AppInput
             label="Search"
+            icon={faMagnifyingGlass}
             value={search}
             onChange={(e) => {
             setSearch(e.target.value);
@@ -127,7 +130,6 @@ const Table = ({
       {renderFilters(filters, setFilters)}
     </div>
   )}
-
   <div className="table-toolbar-btns">
     <button className="btn-showall" onClick={() => setShowAll((p) => !p)}>
       {showAll ? "📄 Paginate" : "📋 Show All"}

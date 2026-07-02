@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllUsers } from "../../../services/GetAllUsers";
 import { loginUser } from "../services/authApi";
 import { useAdminAuth } from "../../../hooks/useAdminAuth";
 import { validateLoginForm, hasErrors } from "../validators/authValidator";
-import MessageModal from "../../../components/ui/MessageModal";
+import MessageModal from "../../../components/ui/Modals/MessageModal";
 import LoginCard from "../components/LoginCard";
 import ForgotPasswordModal from "../modals/ForgotPasswordModal";
 import "./login.css";
@@ -40,8 +39,7 @@ function Login() {
         // ✅ success → toast only, no inline text needed since we're navigating away
         setMessageType("success");
         setMessage("Login successful!");
-        await getAllUsers(response.token);
-        setTimeout(() => navigate("/dashboard"), 1500);
+        setTimeout(() => navigate("/users"), 1500);
       } else {
         // ❌ failure (wrong credentials, server-side) → form-level inline text,
         // not field-specific since we don't know which field was actually wrong

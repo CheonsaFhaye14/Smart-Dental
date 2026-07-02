@@ -1,0 +1,29 @@
+
+.page-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px; /* covers just the page content area */
+  width: 100%;
+  gap: 16px;
+}
+
+.page-spinner__circle {
+  width: 44px;
+  height: 44px;
+  border: 4px solid #d0eaf8;
+  border-top-color: #75c5f1;
+  border-radius: 50%;
+  animation: pageSpin 0.75s linear infinite;
+}
+
+@keyframes pageSpin {
+  to { transform: rotate(360deg); }
+}
+
+.page-spinner__text {
+  font-size: 0.88rem;
+  font-family: 'Varela Round', sans-serif;
+  color: #7ab3cc;
+}

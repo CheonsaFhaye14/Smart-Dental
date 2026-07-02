@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
 
 /* ── Wrapper ─────────────────────────────────────────── */
 .app-select__wrapper {
@@ -6,8 +5,7 @@
   flex-direction: column;
   gap: 0.3rem;
   width: 100%;
-  padding-top: 0.5rem;
-  position: relative;  /* anchor for absolute dropdown */
+  position: relative;    /* ← padding-top: 0.5rem is GONE */
 }
 
 /* ── Field — owns the border ────────────────────────── */
@@ -16,8 +14,8 @@
   width: 100%;
   border: 1.5px solid #88c8e8;
   border-radius: 25px;
-  background: #f7fcff;           /* fills corners so border shows */
-  overflow: visible;             /* lets floating label show above border */
+  background: #f7fcff;
+  overflow: visible;
   transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.2s ease;
 }
 
@@ -37,17 +35,17 @@
 /* ── Trigger — no border, field owns it ─────────────── */
 .app-select__trigger {
   width: 100%;
-  padding: 1rem 2.75rem 1rem 1.1rem;
+  padding: .5rem 2.75rem .5rem 1rem;
   border-radius: 25px;
-  border: none;                 /* border lives on .app-select__field */
+  border: none;
   outline: none;
   font-size: 0.95rem;
   font-family: 'Varela Round', sans-serif;
-  background: transparent;  /* field bg shows through — no corner overlap */
+  background: transparent;
   color: #0d3b66;
   cursor: pointer;
   text-align: left;
-  line-height: 1.5;
+  line-height: 1.2;   /* ← was 1.5, now matches browser default on input */
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -56,7 +54,6 @@
   appearance: none;
   margin: 0;
   transition: background 0.2s ease;
-  width: 100%;
 }
 
 .app-select__field--focused .app-select__trigger {
@@ -132,7 +129,7 @@
 /* ── Dropdown ────────────────────────────────────────── */
 .app-select__dropdown {
   position: absolute;
-  top: calc(100% - 2px);  
+  top: calc(100% - 25px);  
   left: 0;
   right: 0;
   background: #ffffff;
@@ -197,8 +194,15 @@
 
 /* ── Error message ───────────────────────────────────── */
 .app-select__error {
+  min-height: 1.1rem;
   font-size: 0.82rem;
+  line-height: 1.1rem;
   color: #b30000;
   margin: 0;
   padding-left: 1rem;
+  visibility: hidden;
+}
+
+.app-select__error--visible {
+  visibility: visible;
 }

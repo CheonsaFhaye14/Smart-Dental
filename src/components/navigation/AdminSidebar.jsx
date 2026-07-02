@@ -10,7 +10,7 @@ export default function AdminSidebar() {
     <aside className="admin-sidebar">
 
       <nav className="sidebar-nav">
-        <NavLink to="/dashboard" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+        <NavLink to="/users" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
           <FontAwesomeIcon icon={faHome} className="sidebar-icon" />
           <span className="sidebar-text">Dashboard</span>
         </NavLink>
@@ -24,14 +24,14 @@ export default function AdminSidebar() {
 
         <hr className="sidebar-divider" />
 
-        <NavLink to="/services" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+        <NavLink to="/users" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
           <FontAwesomeIcon icon={faBriefcase} className="sidebar-icon" />
           <span className="sidebar-text">Services</span>
         </NavLink>
 
         <hr className="sidebar-divider" />
 
-        <NavLink to="/appointments" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
+        <NavLink to="/users" className={({ isActive }) => `sidebar-link ${isActive ? "active" : ""}`}>
           <FontAwesomeIcon icon={faCalendar} className="sidebar-icon" />
           <span className="sidebar-text">Appointments</span>
         </NavLink>
