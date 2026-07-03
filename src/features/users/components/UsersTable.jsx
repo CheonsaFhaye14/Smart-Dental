@@ -40,7 +40,6 @@ const columns = [
       return true;
     },
   },
-  // ❌ removed the _viewIndicator column entirely
 ];
 
 export default function UsersTable({
@@ -65,7 +64,7 @@ export default function UsersTable({
           <AppSelect
             label="Role"
             value={filters.role || ""}
-            onChange={(e) => setFilters((f) => ({ ...f, role: e.target.value }))}
+            onChange={(value) => setFilters((f) => ({ ...f, role: value }))}
             options={[
               { value: "patient", label: "Patient" },
               { value: "dentist", label: "Dentist" },
@@ -75,7 +74,7 @@ export default function UsersTable({
           <AppSelect
             label="Status"
             value={filters.is_active || ""}
-            onChange={(e) => setFilters((f) => ({ ...f, is_active: e.target.value }))}
+            onChange={(value) => setFilters((f) => ({ ...f, is_active: value }))}
             options={[
               { value: "true", label: "Active" },
               { value: "false", label: "Inactive" },

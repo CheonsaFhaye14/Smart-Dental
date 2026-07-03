@@ -1,5 +1,5 @@
 /* ── Wrapper ─────────────────────────────────────────── */
-.app-select__wrapper {
+.app-multiselect__wrapper {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -7,8 +7,8 @@
   position: relative;
 }
 
-/* ── Field — owns the border ────────────────────────── */
-.app-select__field {
+/* ── Field — owns the border, mirrors .app-select__field ── */
+.app-multiselect__field {
   position: relative;
   width: 100%;
   border: 1.5px solid #88c8e8;
@@ -18,7 +18,7 @@
   transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.2s ease;
 }
 
-.app-select__field--focused {
+.app-multiselect__field--focused {
   border-color: #75c5f1;
   border-bottom-color: transparent;
   box-shadow: 0 0 0 3px rgba(117, 197, 241, 0.2);
@@ -26,27 +26,26 @@
   background: #ffffff;
 }
 
-/* NEW — mirrored radius/border when dropdown opens upward */
-.app-select__field--focused-above {
+.app-multiselect__field--focused-above {
   border-bottom-color: #75c5f1;
   border-top-color: transparent;
   border-radius: 0 0 25px 25px;
 }
 
-.app-select__field--error {
+.app-multiselect__field--error {
   border-color: #e57373;
   box-shadow: 0 0 0 3px rgba(229, 115, 115, 0.15);
 }
 
-/* ── Trigger — no border, field owns it ─────────────── */
-.app-select__trigger {
+/* ── Trigger ─────────────────────────────────────────── */
+.app-multiselect__trigger {
   width: 100%;
-  padding: .5rem 2.75rem .5rem 1rem;
+  padding: 0.5rem 2.75rem 0.5rem 1rem;
   border-radius: 25px;
   border: none;
   outline: none;
   font-size: 0.95rem;
-  font-family: 'Varela Round', sans-serif;
+  font-family: "Varela Round", sans-serif;
   background: transparent;
   color: #0d3b66;
   cursor: pointer;
@@ -56,33 +55,32 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  -webkit-appearance: none;
   appearance: none;
   margin: 0;
+  min-height: 2.6rem;
   transition: background 0.2s ease;
 }
 
-.app-select__field--focused .app-select__trigger {
+.app-multiselect__field--focused .app-multiselect__trigger {
   border-radius: 25px 25px 0 0;
 }
 
-/* NEW — mirrored trigger radius when open upward */
-.app-select__field--focused-above .app-select__trigger {
+.app-multiselect__field--focused-above .app-multiselect__trigger {
   border-radius: 0 0 25px 25px;
 }
 
-.app-select__trigger:disabled {
+.app-multiselect__trigger:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   background: #eaf4fb;
 }
 
-.app-select__value--empty {
+.app-multiselect__value--empty {
   color: transparent;
 }
 
 /* ── Arrow ───────────────────────────────────────────── */
-.app-select__arrow {
+.app-multiselect__arrow {
   position: absolute;
   right: 1rem;
   top: 50%;
@@ -94,19 +92,19 @@
   transition: transform 0.25s ease, color 0.2s ease;
 }
 
-.app-select__arrow--open {
+.app-multiselect__arrow--open {
   transform: translateY(-50%) rotate(180deg);
   color: #75c5f1;
 }
 
-/* ── Floating label — identical to .app-input__label ── */
-.app-select__label {
+/* ── Floating label ──────────────────────────────────── */
+.app-multiselect__label {
   position: absolute;
   left: 1.1rem;
   top: 50%;
   transform: translateY(-50%);
   font-size: 0.95rem;
-  font-family: 'Varela Round', sans-serif;
+  font-family: "Varela Round", sans-serif;
   color: #7ab3cc;
   pointer-events: none;
   transition: top 0.2s ease, transform 0.2s ease, font-size 0.2s ease, color 0.2s ease;
@@ -118,11 +116,11 @@
   z-index: 1;
 }
 
-/* NEW — keep the floating label in front of the dropdown when flipped above */
-.app-select__field--focused-above .app-select__label--float {
+.app-multiselect__field--focused-above .app-multiselect__label--float {
   z-index: 101;
 }
-.app-select__label--float {
+
+.app-multiselect__label--float {
   top: 0;
   transform: translateY(-50%);
   font-size: 0.72rem;
@@ -131,17 +129,17 @@
   z-index: 2;
 }
 
-.app-select__field--focused .app-select__label--float {
+.app-multiselect__field--focused .app-multiselect__label--float {
   color: #4aa3e0;
   background: #ffffff;
 }
 
-.app-select__field--error .app-select__label--float {
+.app-multiselect__field--error .app-multiselect__label--float {
   color: #e57373;
 }
 
 /* ── Dropdown ────────────────────────────────────────── */
-.app-select__dropdown {
+.app-multiselect__dropdown {
   position: absolute;
   top: calc(100% - 25px);
   left: 0;
@@ -154,24 +152,56 @@
   clip-path: inset(0 -3px -3px -3px);
   z-index: 100;
   overflow: hidden;
-  animation: dropdown-in 0.15s ease;
+  animation: multiselect-dropdown-in 0.15s ease;
+  display: flex;
+  flex-direction: column;
 }
 
-/* NEW — flipped dropdown: connects to the field's top edge instead */
-.app-select__dropdown--above {
+.app-multiselect__dropdown--above {
   top: auto;
   bottom: calc(100% - 1px);
   border-top: 1.5px solid #75c5f1;
   border-bottom: none;
   border-radius: 20px 20px 0 0;
-  clip-path: inset(-3px -3px 0 -3px); /* keeps left/right/top, clips bottom instead */
+  clip-path: inset(-3px -3px 0 -3px);
+  flex-direction: column-reverse;
+}
+
+@keyframes multiselect-dropdown-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Search input inside dropdown ───────────────────── */
+.app-multiselect__search {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid #e8f6fd;
+  padding: 0.65rem 1.1rem;
+  font-family: "Varela Round", sans-serif;
+  font-size: 0.9rem;
+  color: #0d3b66;
+  outline: none;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.app-multiselect__dropdown--above .app-multiselect__search {
+  border-bottom: none;
+  border-top: 1px solid #e8f6fd;
 }
 
 /* ── Options ─────────────────────────────────────────── */
-.app-select__option {
+.app-multiselect__options {
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.app-multiselect__option {
   padding: 0.7rem 1.1rem;
   font-size: 0.92rem;
-  font-family: 'Varela Round', sans-serif;
+  font-family: "Varela Round", sans-serif;
   color: #0d3b66;
   cursor: pointer;
   display: flex;
@@ -180,71 +210,82 @@
   transition: background 0.15s ease;
 }
 
-.app-select__option:hover {
+.app-multiselect__option:hover {
   background: #e8f6fd;
 }
 
-.app-select__option--active {
+.app-multiselect__option--active {
   background: linear-gradient(90deg, #d0ecfa, #e8f6fd);
   color: #1a5f9a;
   font-weight: 600;
 }
 
-.app-select__option--active:hover {
+.app-multiselect__option--active:hover {
   background: linear-gradient(90deg, #c2e4f7, #d8f0fb);
 }
 
-.app-select__option--empty {
+.app-multiselect__option--empty {
   color: #7ab3cc;
   font-size: 0.85rem;
-  border-bottom: 1px solid #e8f6fd;
+  cursor: default;
 }
 
-/* NEW — when flipped, the "None" separator makes more sense at the bottom
-   (right above the field) rather than the top */
-.app-select__dropdown--above .app-select__option--empty {
-  border-bottom: none;
+.app-multiselect__option--empty:hover {
+  background: transparent;
+}
+
+.app-multiselect__option--add {
+  color: #4aa3e0;
+  font-weight: 600;
   border-top: 1px solid #e8f6fd;
-  order: 1;
 }
 
-.app-select__dropdown--above .app-select__option:not(.app-select__option--empty) {
-  order: 0;
-}
-
-.app-select__dropdown--above {
-  display: flex;
-  flex-direction: column;
-}
-
-.app-select__check {
+.app-multiselect__check {
   color: #75c5f1;
   font-size: 0.85rem;
   font-weight: 700;
   flex-shrink: 0;
 }
 
-.app-select__option:last-child {
-  border-radius: 0 0 18px 18px;
+/* ── Chips (selected values, shown below the field) ──── */
+.app-multiselect__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0 0.2rem;
 }
 
-/* NEW — when flipped, round the top corners of the first visible option instead */
-.app-select__dropdown--above .app-select__option:first-child {
-  border-radius: 18px 18px 0 0;
+.app-multiselect__chip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.32rem 0.65rem;
+  border-radius: 20px;
+  background: #eaf6fd;
+  border: 1px solid #b8ddf5;
+  color: #1a5f9a;
+  font-size: 0.8rem;
+  font-family: "Varela Round", sans-serif;
 }
 
-.app-select__dropdown--above .app-select__option:last-child {
-  border-radius: 0;
+.app-multiselect__chip-remove {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  font-size: 0.75rem;
+  line-height: 1;
+  transition: opacity 0.15s ease;
 }
 
-/* ── Animation ───────────────────────────────────────── */
-@keyframes dropdown-in {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+.app-multiselect__chip-remove:hover {
+  opacity: 1;
 }
 
 /* ── Error message ───────────────────────────────────── */
-.app-select__error {
+.app-multiselect__error {
   min-height: 1.1rem;
   font-size: 0.82rem;
   line-height: 1.1rem;
@@ -254,6 +295,6 @@
   visibility: hidden;
 }
 
-.app-select__error--visible {
+.app-multiselect__error--visible {
   visibility: visible;
 }

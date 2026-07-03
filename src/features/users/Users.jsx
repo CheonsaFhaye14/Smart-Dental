@@ -10,6 +10,10 @@ import {
   toggleUserStatus,
   sendPasswordReset,
 } from "./services/usersService";
+import {
+  getMedicalReferenceItems,
+  addMedicalReferenceItem,
+} from "../../services/medicalReferenceService";
 import "./Users.css";
 
 import PageSpinner from "../../components/ui/LoadingScreen/PageSpinner";
@@ -22,6 +26,10 @@ export default function Users() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  // ── Medical reference data (allergies / conditions) ───
+  const [allergyOptions, setAllergyOptions] = useState([]);
+  const [conditionOptions, setConditionOptions] = useState([]);
 
   // ── Form modal state ──────────────────────────────────
   const [formModal, setFormModal] = useState({
@@ -59,7 +67,7 @@ export default function Users() {
   const closeConfirm = () =>
     setConfirm({ message: "", onConfirm: null, variant: "danger", confirmLabel: "Confirm" });
 
-  // ── Fetch ─────────────────────────────────────────────
+  // ── Fetch users ───────────────────────────────────────
   const fetchUsers = useCallback(async () => {
     if (!token) return;
     setLoading(true);
@@ -79,9 +87,30 @@ export default function Users() {
     setLoading(false);
   }, [token, filters.search, filters.role]);
 
+  // ── Fetch medical reference data (once, on page load) ─
+  const fetchMedicalReferenceData = useCallback(async () => {
+    if (!token) return;
+
+    const [allergyRes, conditionRes] = await Promise.all([
+      getMedicalReferenceItems(token, "allergy"),
+      getMedicalReferenceItems(token, "condition"),
+    ]);
+
+    if (allergyRes.success) {
+      setAllergyOptions(allergyRes.data.map((item) => item.label));
+    }
+    if (conditionRes.success) {
+      setConditionOptions(conditionRes.data.map((item) => item.label));
+    }
+  }, [token]);
+
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
+
+  useEffect(() => {
+    fetchMedicalReferenceData();
+  }, [fetchMedicalReferenceData]);
 
   // ── Handlers ──────────────────────────────────────────
   const handleEdit = (row) => {
@@ -151,6 +180,23 @@ export default function Users() {
     });
   };
 
+  // ── Add a new allergy/condition option (from inside the modal) ─
+  const handleAddAllergy = async (label) => {
+    setAllergyOptions((prev) => (prev.includes(label) ? prev : [...prev, label].sort()));
+    const result = await addMedicalReferenceItem(token, "allergy", label);
+    if (!result.success) {
+      showToast(result.message, "error");
+    }
+  };
+
+  const handleAddCondition = async (label) => {
+    setConditionOptions((prev) => (prev.includes(label) ? prev : [...prev, label].sort()));
+    const result = await addMedicalReferenceItem(token, "condition", label);
+    if (!result.success) {
+      showToast(result.message, "error");
+    }
+  };
+
   // ── Render ────────────────────────────────────────────
   if (loading) return <PageSpinner />;
 
@@ -176,6 +222,10 @@ export default function Users() {
         initialData={formModal.user}
         onClose={closeFormModal}
         onSuccess={handleFormSuccess}
+        allergyOptions={allergyOptions}
+        conditionOptions={conditionOptions}
+        onAddAllergy={handleAddAllergy}
+        onAddCondition={handleAddCondition}
       />
 
       <div className="same-row">

@@ -63,6 +63,7 @@ export default function AppDatePicker({
   const todayParts = { year: today.getFullYear(), month: today.getMonth(), day: today.getDate() };
 
   const [open, setOpen] = useState(false);
+  const [popupPosition, setPopupPosition] = useState("below"); // "below" | "above"
   const [viewMode, setViewMode] = useState("days"); // "days" | "months" | "years"
   const [viewYear, setViewYear] = useState(selected?.year || todayParts.year);
   const [viewMonth, setViewMonth] = useState(selected?.month ?? todayParts.month);
@@ -116,6 +117,20 @@ export default function AppDatePicker({
       setViewMonth(selected?.month ?? todayParts.month);
       setDecadeStart(Math.floor((selected?.year || todayParts.year) / 12) * 12);
       setViewMode("days");
+
+      // measure available space and flip the popup upward if it won't fit below
+      if (wrapperRef.current) {
+        const rect = wrapperRef.current.getBoundingClientRect();
+        const estimatedPopupHeight = 340;
+        const spaceBelow = window.innerHeight - rect.bottom;
+        const spaceAbove = rect.top;
+
+        setPopupPosition(
+          spaceBelow < estimatedPopupHeight && spaceAbove > spaceBelow
+            ? "above"
+            : "below"
+        );
+      }
     }
     setOpen((o) => !o);
   };
@@ -167,7 +182,10 @@ export default function AppDatePicker({
       </p>
 
       {open && (
-        <div className="date-picker__popup" onClick={(e) => e.stopPropagation()}>
+        <div
+          className={`date-picker__popup ${popupPosition === "above" ? "date-picker__popup--above" : ""}`}
+          onClick={(e) => e.stopPropagation()}
+        >
           {viewMode === "days" && (
             <>
               <div className="date-picker__header">

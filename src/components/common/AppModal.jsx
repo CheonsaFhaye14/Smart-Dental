@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import "./AppModal.css";
 
-function AppModal({ isOpen, onClose, title, subtitle, children, maxWidth = "420px" }) {
+function AppModal({ isOpen, onClose, title, subtitle, children, maxWidth = "420px", className = "" }) {
   useEffect(() => {
     if (!isOpen) return;
     const handleKey = (e) => { if (e.key === "Escape") onClose(); };
@@ -25,17 +25,19 @@ function AppModal({ isOpen, onClose, title, subtitle, children, maxWidth = "420p
   return createPortal(
     <div className="app-modal__overlay" onClick={onClose}>
       <div
-        className="app-modal__card"
+        className={`app-modal__card ${className}`}
         style={{ maxWidth }}
         onClick={(e) => e.stopPropagation()}
       >
-        {(title || subtitle) && (
-          <div className="app-modal__header">
-            {title    && <h2 className="app-modal__title">{title}</h2>}
-            {subtitle && <p  className="app-modal__subtitle">{subtitle}</p>}
-          </div>
-        )}
-        <div className="app-modal__body">{children}</div>
+        <div className="app-modal__scroll">
+          {(title || subtitle) && (
+            <div className="app-modal__header">
+              {title    && <h2 className="app-modal__title">{title}</h2>}
+              {subtitle && <p  className="app-modal__subtitle">{subtitle}</p>}
+            </div>
+          )}
+          <div className="app-modal__body">{children}</div>
+        </div>
       </div>
     </div>,
     document.body   // mounts directly on body, sibling to #root

@@ -12,7 +12,7 @@
 /* ── Toolbar — single row ────────────────────────────── */
 .table-toolbar {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   margin-bottom: 14px;
   position: relative;
@@ -21,10 +21,10 @@
   flex-wrap: wrap;         /* keep everything on one row */
 }
 
-/* search takes fixed width, doesn't grow */
+/* search grows more than filters, but never shrinks below 350px */
 .table-toolbar > .app-input__wrapper {
-  flex: 0 0 350px;           /* fixed 350px, won't shrink or grow */
-  min-width: 0;
+  flex: 2 1 350px;   /* grow: 2 (faster than filters), shrink: 1, basis: 350px */
+  min-width: 350px;  /* floor — won't shrink past this on desktop */
 }
 
 /* filters row fills remaining space */
@@ -262,7 +262,8 @@
   }
 
   .table-toolbar > .app-input__wrapper {
-    flex: 1 1 100%;            /* full width on mobile */
+    flex: 1 1 100%;
+    min-width: 0;   /* ← add this so it can shrink below 350px on mobile */
   }
 
   .table-filters {

@@ -11,6 +11,7 @@ function AppSelect({
   className = "",
 }) {
   const [open, setOpen] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState("below"); // "below" | "above"
   const wrapperRef = useRef(null);
 
   const selected = options.find((o) => o.value === value);
@@ -26,23 +27,42 @@ function AppSelect({
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  const handleToggle = () => {
+    if (disabled) return;
+
+    if (!open && wrapperRef.current) {
+      const rect = wrapperRef.current.getBoundingClientRect();
+      const estimatedDropdownHeight = Math.min((options.length + 1) * 44, 260);
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+
+      setDropdownPosition(
+        spaceBelow < estimatedDropdownHeight && spaceAbove > spaceBelow
+          ? "above"
+          : "below"
+      );
+    }
+
+    setOpen((o) => !o);
+  };
+
   const handleSelect = (opt) => {
-    onChange({ target: { value: opt.value } });
+    onChange(opt.value);
     setOpen(false);
   };
 
   return (
     <div className={`app-select__wrapper ${className}`} ref={wrapperRef}>
 
-      {/* field — owns the border and clips trigger corners */}
       <div className={`app-select__field
         ${error ? "app-select__field--error"  : ""}
         ${open  ? "app-select__field--focused" : ""}
+        ${open && dropdownPosition === "above" ? "app-select__field--focused-above" : ""}
       `}>
         <button
           type="button"
           className="app-select__trigger"
-          onClick={() => !disabled && setOpen((o) => !o)}
+          onClick={handleToggle}
           disabled={disabled}
         >
             <span className={`app-select__value ${!selected ? "app-select__value--empty" : ""}`}>
@@ -64,9 +84,8 @@ function AppSelect({
         </span>
       </div>
 
-      {/* dropdown — outside .app-select__field so overflow:hidden doesn't clip it */}
       {open && (
-        <div className="app-select__dropdown">
+        <div className={`app-select__dropdown ${dropdownPosition === "above" ? "app-select__dropdown--above" : ""}`}>
           <div
             className={`app-select__option app-select__option--empty ${!value ? "app-select__option--active" : ""}`}
             onClick={() => handleSelect({ value: "" })}
@@ -86,9 +105,9 @@ function AppSelect({
         </div>
       )}
 
-<p className={`app-select__error ${error ? "app-select__error--visible" : ""}`}>
-  {error || "\u00A0"}
-</p>
+      <p className={`app-select__error ${error ? "app-select__error--visible" : ""}`}>
+        {error || "\u00A0"}
+      </p>
     </div>
   );
 }

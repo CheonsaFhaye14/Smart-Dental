@@ -12,7 +12,7 @@ function AppInput({
   error,
   disabled = false,
   className = "",
-  icon,          // ← new prop
+  icon,
   ...rest
 }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +26,6 @@ function AppInput({
     <div className={`app-input__wrapper ${className}`}>
       <div className={`app-input__field ${error ? "app-input__field--error" : ""} ${focused ? "app-input__field--focused" : ""}`}>
 
-        {/* Left icon */}
         {icon && (
           <span className="app-input__icon">
             <FontAwesomeIcon icon={icon} />
@@ -36,7 +35,7 @@ function AppInput({
         <input
           type={inputType}
           value={value}
-          onChange={onChange}
+          onChange={(e) => onChange(e.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           placeholder={label ? "" : placeholder}
@@ -62,9 +61,9 @@ function AppInput({
         )}
       </div>
 
-<p className={`app-input__error ${error ? "app-input__error--visible" : ""}`}>
-  {error || "\u00A0"}
-</p>
+      <p className={`app-input__error ${error ? "app-input__error--visible" : ""}`}>
+        {error || "\u00A0"}
+      </p>
     </div>
   );
 }

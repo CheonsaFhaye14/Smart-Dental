@@ -1,0 +1,83 @@
+.segmented-picker__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: 100%;
+}
+
+.segmented-picker__label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #7ab3cc;
+  padding-left: 0.2rem;
+}
+
+.segmented-picker__row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.segmented-picker__btn {
+  flex: 1;
+  min-width: 110px;
+  padding: 0.6rem 0.75rem;
+  border-radius: 14px;
+  border: 1.5px solid #b8ddf5;
+  background: #f7fcff;
+  color: #4a7c98;
+  font-family: "Varela Round", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  transition: all 0.2s ease;
+}
+
+.segmented-picker__btn:hover {
+  background: #eaf6fd;
+  border-color: #75c5f1;
+}
+
+.segmented-picker__btn--active {
+  background: linear-gradient(135deg, #75c5f1, #4aa3e0);
+  border-color: #4aa3e0;
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(117, 197, 241, 0.35);
+}
+
+.segmented-picker__btn--active:hover {
+  background: linear-gradient(135deg, #4aa3e0, #3690d1);
+  border-color: #3690d1;
+  color: #ffffff;
+}
+
+.segmented-picker__btn--active-success {
+  background: linear-gradient(135deg, #7fd99a, #4caf70);
+  border-color: #4caf70;
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(76, 175, 112, 0.35);
+}
+
+.segmented-picker__btn--active-success:hover {
+  background: linear-gradient(135deg, #4caf70, #3b8c5a);
+  border-color: #3b8c5a;
+  color: #ffffff;
+}
+.segmented-picker__btn--active-danger {
+  background: linear-gradient(135deg, #f3a4a4, #e05757);
+  border-color: #e05757;
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(224, 87, 87, 0.35);
+}
+
+.segmented-picker__btn--active-danger:hover {
+  background: linear-gradient(135deg, #e05757, #c43f3f);
+  border-color: #c43f3f;
+  color: #ffffff;
+}
+

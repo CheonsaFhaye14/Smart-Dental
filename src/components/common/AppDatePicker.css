@@ -125,6 +125,12 @@
   animation: date-picker-pop 0.15s ease;
 }
 
+/* NEW — flips the popup above the field when there's no room below */
+.date-picker__popup--above {
+  top: auto;
+  bottom: calc(100% + 0.5rem);
+}
+
 @keyframes date-picker-pop {
   from { opacity: 0; transform: translateY(-4px); }
   to   { opacity: 1; transform: translateY(0); }
