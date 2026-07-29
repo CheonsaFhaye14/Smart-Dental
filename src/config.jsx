@@ -1,5 +1,5 @@
 // Toggle this to true for local development, false for production
-const IS_LOCAL = true;
+const IS_LOCAL = false;
 
 export const BASE_URL = IS_LOCAL
   ? "http://localhost:3000" // your local backend URL
